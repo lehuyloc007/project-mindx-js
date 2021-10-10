@@ -6,7 +6,7 @@ hello.innerHTML = "Hello World";
 CommonJsAddClass(hello, "red", "blue");
 CommonJsRemoveClass(hello, "red");
 
-
+const txt='acb'
 const setScreen = ($container) => {
     app.appendChild($container);
 }
