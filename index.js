@@ -6,7 +6,8 @@ hello.innerHTML = "Hello World";
 CommonJsAddClass(hello, "red", "blue");
 CommonJsRemoveClass(hello, "red");
 
-
+const a = 1
+const txt='acb'
 const setScreen = ($container) => {
     app.appendChild($container);
 }
