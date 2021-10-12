@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+body {
+    font-family: 'Roboto', sans-serif;
+}
+.btn-home span:first-child {
+    background: url('components/imgs/home-icon.svg') no-repeat;
+}
+.btn-create-post span:first-child {
+    background: url('components/imgs/add-post.svg') no-repeat;
+}
+.btn-user span:first-child {
+    background: url('components/imgs/home-icon.svg') no-repeat;
+}
+.btn-logout span:first-child {
+    background: url('components/imgs/logout.svg') no-repeat;
+}
+.nav-link span {
+    font-size: 0.9rem;
+    line-height: 18px;
+}
+.nav-link span:first-child {
+    margin-right: 0.25rem;
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}
