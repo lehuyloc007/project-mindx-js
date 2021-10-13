@@ -2,26 +2,71 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
+a {
+    text-decoration: none;
+}
+.h6 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.h5 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.fs-09 {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+.bg-FBFAFA {
+    background: #FBFAFA;
+}
 .btn-home span:first-child {
-    background: url('components/imgs/home-icon.svg') no-repeat;
+    background: url('components/imgs/home-icon.svg');
 }
 .btn-create-post span:first-child {
-    background: url('components/imgs/add-post.svg') no-repeat;
-}
-.btn-user span:first-child {
-    background: url('components/imgs/home-icon.svg') no-repeat;
+    background: url('components/imgs/add-post.svg');
 }
 .btn-logout span:first-child {
-    background: url('components/imgs/logout.svg') no-repeat;
+    background: url('components/imgs/logout.svg');
 }
 .nav-link span {
     font-size: 0.9rem;
     line-height: 18px;
 }
 .nav-link span:first-child {
-    margin-right: 0.25rem;
     background-size: 18px;
     width: 18px;
     height: 18px;
     display: inline-block;
+    background-repeat: no-repeat;
+}
+.post-new .card-header img {
+    width: 30px;
+    height: 30px;
+}
+.post-new .carousel .carousel-item img {
+    height: 40vh;
+}
+.like-count span:first-child {
+    background: url('components/imgs/icon-like.svg');
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background-repeat: no-repeat;
+}
+
+.list-friend img {
+    width: 40px;
+    height: 40px;
+}
+.icon-del-friend {
+    background: url('components/imgs/icon-del-friend.svg');
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background-repeat: no-repeat;
 }
