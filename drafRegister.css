@@ -1,0 +1,35 @@
+.create-post-body img{
+    width: 40px;
+    height: 40px;
+}
+
+.icon-smile{
+    background: url("components/imgs/icon-smile.svg") no-repeat;
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+}
+
+.icon-picture{
+    background: url("components/imgs/icon-picture.svg") no-repeat;
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+}
+
+.edit-profile-body img{
+    width: 80px;
+    height: 80px;
+   
+}
+.icon-pencil{
+    background: url("components/imgs/icon-pencil.svg") no-repeat ;
+    width: 30px;
+    height: 30px;
+    background-size: 20px;
+    top: 37%;
+    left: 48%;
+   
+
+}
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="library/bootstrap.css"/>
+    <script src="library/bootstrap.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="drafRegister.css">
+</head>
+<body>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+    
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title h5">Chỉnh sửa trang cá nhân</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body edit-profile-body px-5">
+                <div class="rounded-3 d-flex mt-3 position-relative">
+                    <img class="rounded-circle mx-auto" src="components/imgs/111.jpg" alt="">
+                    <div class="icon-pencil position-absolute"></div>
+                </div>
+                <div class="form-floating mt-4">
+                    <input type="text" class="form-control">
+                    <label for="floatingInputValue">Tên người dùng</label>
+                </div>
+
+                <div class="form-floating mt-4">
+                    <input type="text" class="form-control">
+                    <label for="floatingInputValue">Mô tả</label>
+                </div>
+
+                <div class="mb-5 mt-4 d-flex align-items-center">
+                    Mật khẩu
+                    <button type="button" class="btn btn-white text-primary p-0 ps-5">Đổi mật khẩu</button>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm">Đóng</button>
+                <button type="button" class="btn btn-primary btn-sm">Tạo bài viết</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
