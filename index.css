@@ -70,3 +70,8 @@ a {
     display: inline-block;
     background-repeat: no-repeat;
 }
+.list-search img{
+    width: 60px;
+    height: 60px;
+    
+}
