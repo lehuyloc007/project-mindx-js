@@ -1,0 +1,40 @@
+.avatar {
+  width: 10rem;
+  height: 10rem;
+}
+.icon-setting {
+  background: url('components/imgs/icon-setting.svg');
+  background-size: cover;
+  background-position: center;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.icon-list-posts {
+  background: url('components/imgs/icon-list-posts.svg');
+  background-size: cover;
+  background-position: center;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.icon-delete-post {
+  background: url('components/imgs/icon-delete-post.svg');
+  background-size: cover;
+  background-position: center;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.text-494949 {
+  color: #494949;
+}
+.text-868686 {
+  color: #868686;
+}
+.bg-ececec {
+  background-color: #ececec;
+}
+.right-0 {
+  right: 0!important;
+}
+.ratio>* {
+  left: unset !important;
+}

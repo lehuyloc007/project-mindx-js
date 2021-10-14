@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="library/bootstrap.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="draftDetail.css" />
+    <script src="library/bootstrap.js"></script> 
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom py-1 fixed-top">
+        <div class="container">
+            <a class="navbar-brand fst-italic fw-bold" href="#">Social</a>
+            <button class="navbar-toggler ms-auto d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="mx-auto d-none d-md-block">
+                <div class="input-group input-group-sm">
+                    <input class="form-control" type="text" placeholder="Nhập từ khóa...">
+                    <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+          
+            <div>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mt-2 mt-lg-0">
+                        <li class="nav-item d-block d-md-none">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control" type="text" placeholder="Nhập từ khóa...">
+                                <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-home d-flex align-items-center" href="#"><span></span><span class="ms-1 d-inline-block d-md-none">Trang chủ</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-create-post d-flex align-items-center" href="#"><span></span><span class="ms-1 d-inline-block d-md-none">Tạo bài viết</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-user d-flex align-items-center" href="#"><span class="rounded-circle" style="background: url(components/imgs/111.jpg);"></span><span class="ms-1 d-inline-block d-md-none">Tài khoản</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-logout d-flex align-items-center" href="#"><span></span><span class="ms-1 d-inline-block d-md-none">Đăng xuất</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5 pt-3 text-dark">
+        <div class="row">
+            <div class="col-md-10 col-12 offset-md-1 row justify-content-center">
+                <div class="col-md-3">
+                    <div class="avatar rounded-circle bg-secondary mx-auto"></div>
+                </div>
+                <div class="col-md-7">
+                    <div>
+                        <div class="pt-2 d-flex flex-start align-items-center clearfix">
+                            <div class="me-3 mb-0 h3 text-494949">Minh Hiếu Cute</div>
+                            <div class="btn btn-edit-profile border rounded d-flex align-items-center py-1">
+                                <div class="me-2">Chỉnh sửa trang cá nhân</div>
+                                <div class="icon-setting"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <div class="me-4">
+                            <span class="h3">8</span>
+                            <span class="text-868686">Bài viết</span>
+                        </div>
+                        <div class="me-4">
+                            <span class="h3">5</span>
+                            <span class="text-868686">Người theo dõi</span>
+                        </div>
+                        <div class="me-4">
+                            <span class="text-868686">Đang theo dõi</span>
+                            <span class="h3">10</span>
+                            <span class="text-868686">người dùng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="border-bottom mt-3 pb-1">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="icon-list-posts me-1"></div>
+                        <div class="h5 mb-0">Bài Viết</div>
+                    </div>
+                </div>
+                <div class="pt-4 pb-3 bg-ececec">
+                    <div class="list-posts row col col-md-10 mx-auto">
+                        <div class="col col-md-4 mt-4">
+                            <div class="ratio ratio-1x1 bg-secondary rounded">
+                                <div class="icon-delete-post mt-1 me-1 right-0 position-absolute"></div>
+                            </div>
+                        </div>
+                        <div class="col col-md-4 mt-4">
+                            <div class="ratio ratio-1x1 bg-secondary rounded"></div>
+                        </div>
+                        <div class="col col-md-4 mt-4">
+                            <div class="ratio ratio-1x1 bg-secondary rounded"></div>
+                        </div>
+                        <div class="col col-md-4 mt-4">
+                            <div class="ratio ratio-1x1 bg-secondary rounded"></div>
+                        </div>
+                        <div class="col col-md-4 mt-4">
+                            <div class="ratio ratio-1x1 bg-secondary rounded"></div>
+                        </div>
+                        <div class="col col-md-4 mt-4">
+                            <div class="ratio ratio-1x1 bg-secondary rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
