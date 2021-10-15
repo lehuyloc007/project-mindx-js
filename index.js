@@ -1,16 +1,15 @@
+import { Login } from "./components/login.js";
 import { CommonJsCreateEl, CommonJsAddClass, CommonJsRemoveClass } from "./components/shared/common.js";
 
-const app = document.getElementById("app");
-const hello = CommonJsCreateEl("h1")
-hello.innerHTML = "Hello World";
-CommonJsAddClass(hello, "red", "blue");
-CommonJsRemoveClass(hello, "red");
+const app = document.getElementById(`app`);
 
-const a = 5
-const txt='acb'
+
 const setScreen = ($container) => {
+    app.innerHTML = "";
     app.appendChild($container);
 }
 
-setScreen(hello);
-export { setScreen };
+const loginScreen = new Login();
+setScreen(loginScreen.$container);
+
+export {setScreen};
