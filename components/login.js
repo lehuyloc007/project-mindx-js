@@ -1,19 +1,20 @@
 import { CommonJsCreateEl } from "./shared/common.js";
 import { InputGroup } from "./shared/inputGroup.js";
-import { setScreen } from "../index.js"
-import { Register } from "./register.js";
+import {setScreen} from "../index.js";
+import { Register } from "./register.js"
 
-class Login{
-    $container = CommonJsCreateEl("div");
-    $txtTitle = CommonJsCreateEl("h3");
 
-    $form = CommonJsCreateEl("form");
+class Login{ 
+    $container = CommonJsCreateEl('div');
+    $txtTitle = CommonJsCreateEl('h3');
+
+    $form = CommonJsCreateEl('form');
     $inputGroupEmail = new InputGroup("Email", "email");
     $inputGroupPassword = new InputGroup("Password", "password");
 
-    $actions = CommonJsCreateEl("div"); 
-    $btnLogin = CommonJsCreateEl("button");
-    $btnGoToRegister = CommonJsCreateEl("button");
+    $actions = CommonJsCreateEl('div');
+    $btnLogin = CommonJsCreateEl('button');
+    $btnGoToRegister = CommonJsCreateEl('button');
 
     constructor(){
         this.$txtTitle.innerHTML = "Login";
@@ -32,13 +33,14 @@ class Login{
         this.$actions.appendChild(this.$btnLogin);
         this.$actions.appendChild(this.$btnGoToRegister);
 
+        
     }
-    
+
     handleGoToRegister = () => {
         const registerScreen = new Register();
         setScreen(registerScreen.$container);
-    };
-   
+    };  
 }
 
-export {Login}
+
+export {Login};

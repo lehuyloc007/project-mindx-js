@@ -1,5 +1,7 @@
-import { CommonJsCreateEl } from "./shared/common";
-import { InputGroup } from "./shared/inputGroup";
+import { CommonJsCreateEl } from "./shared/common.js";
+import { InputGroup } from "./shared/inputGroup.js";
+import {Login} from './login.js'
+
 
 class Register{
     $container = CommonJsCreateEl("div");
@@ -11,22 +13,23 @@ class Register{
     $inputGroupPassword = new InputGroup("Password", "password");
     $inputGroupConfirmPassword = new InputGroup("Confirm Password", "password");
 
-    $actions = CommonJsCreateEl("div");
+    $action = CommonJsCreateEl("div");
     $btnRegister = CommonJsCreateEl("button");
-    $btnGoToLogin = CommonJsCreateEl("button");
+    $btnGoTologin = CommonJsCreateEl("button");   
+
 
     constructor(){
         this.$container.appendChild(this.$form);
-
-        this.$txtTitle.innerHTML = "Register";
 
         this.$form.appendChild(this.$txtTitle);
         this.$form.appendChild(this.$inputGroupEmail.$container);
         this.$form.appendChild(this.$inputGroupDisplayName.$container);
         this.$form.appendChild(this.$inputGroupPassword.$container);
         this.$form.appendChild(this.$inputGroupConfirmPassword.$container);
-        this.$form.appendChild(this.$actions);
-        this.$btnGoToRegister.addEventListener('click', this.handleSubmit);
+        this.$form.appendChild(this.$action);
+        this.$form.addEventListener("submit",this.handleSubmit);
+
+
 
         this.$btnRegister.innerHTML = "Register";
         this.$btnRegister.type = "submit";
@@ -35,17 +38,28 @@ class Register{
 
         this.$action.appendChild(this.$btnRegister);
         this.$action.appendChild(this.$btnGoTologin);
+
     }
+
+
     handleSubmit = (event) => {
         event.preventDefault();
 
         const email = this.$inputGroupEmail.getValue();
+        const password = this.$inputGroupPassword.getValue();
+        
         if(!email){
-            this.$inputGroupEmail.setErrorMessage("Email cannot be empty!");
-        } else {
+            this.$inputGroupEmail.setErrorMessage("Email can not be empty");
+        } else{
             this.$inputGroupEmail.setErrorMessage("");
         }
-    }
+
+        if(!password){
+            this.$inputGroupPassword.setErrorMessage("Password can not be empty")
+        }
+
+        if
+    };
 }
 
 export {Register};

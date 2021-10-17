@@ -24,4 +24,4 @@ class InputGroup{
     }
 }
 
-export { InputGroup }
+export { InputGroup };
