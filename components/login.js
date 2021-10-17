@@ -71,5 +71,18 @@ class Login {
         this.$actions.appendChild(this.$btnGoToRegister);
     }
 }
- 
+export function validate() {
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                if (email== null || email== "") {
+                    alert("Please enter the email.");
+                    return false;
+                }
+                if (password == null || password == "") {
+                    alert("Please enter the password.");
+                    return false;
+                }
+                alert('Login successful');
+                
+            } 
 export {Login};
