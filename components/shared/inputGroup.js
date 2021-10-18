@@ -8,7 +8,7 @@ class InputGroup{
 
     constructor(label, inputType){
         this.$label.innerHTML = label;
-        this.$input.inputType = inputType;
+        this.$input.type = inputType;
 
         this.$container.appendChild(this.$label);
         this.$container.appendChild(this.$input);

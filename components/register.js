@@ -9,9 +9,9 @@ class Register{
 
     $form = CommonJsCreateEl("form");
     $inputGroupEmail = new InputGroup("Email", "email");
-    $inputGroupDisplayName = new InputGroup("Display Name", "text");
-    $inputGroupPassword = new InputGroup("Password", "password");
-    $inputGroupConfirmPassword = new InputGroup("Confirm Password", "password");
+    $inputGroupDisplayName = new InputGroup("Tên người dùng", "text");
+    $inputGroupPassword = new InputGroup("Mật khẩu", "password");
+    $inputGroupConfirmPassword = new InputGroup("Xác nhận mật khẩu", "password");
 
     $action = CommonJsCreateEl("div");
     $btnRegister = CommonJsCreateEl("button");
@@ -19,11 +19,13 @@ class Register{
 
 
     constructor(){
+        this.$txtTitle.innerHTML = "Social";
+
         this.$container.appendChild(this.$form);
 
         this.$form.appendChild(this.$txtTitle);
-        this.$form.appendChild(this.$inputGroupEmail.$container);
         this.$form.appendChild(this.$inputGroupDisplayName.$container);
+        this.$form.appendChild(this.$inputGroupEmail.$container);
         this.$form.appendChild(this.$inputGroupPassword.$container);
         this.$form.appendChild(this.$inputGroupConfirmPassword.$container);
         this.$form.appendChild(this.$action);
@@ -47,18 +49,24 @@ class Register{
 
         const email = this.$inputGroupEmail.getValue();
         const password = this.$inputGroupPassword.getValue();
+        const displayName = this.$inputGroupDisplayName.getValue();
+        const confirmPassword = this.$inputGroupConfirmPassword.getValue();
         
         if(!email){
-            this.$inputGroupEmail.setErrorMessage("Email can not be empty");
+            this.$inputGroupEmail.setErrorMessage("Email can not be empty!");
         } else{
             this.$inputGroupEmail.setErrorMessage("");
         }
 
         if(!password){
-            this.$inputGroupPassword.setErrorMessage("Password can not be empty")
+            this.$inputGroupPassword.setErrorMessage("Password can not be empty!")
         }
 
-        if
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+            firebase.auth().currentUser.sendEmailVerification().then(() => {
+                    alert("Please check your inbox;");
+            });
+        });
     };
 }
 

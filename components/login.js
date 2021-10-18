@@ -17,7 +17,7 @@ class Login{
     $btnGoToRegister = CommonJsCreateEl('button');
 
     constructor(){
-        this.$txtTitle.innerHTML = "Login";
+        this.$txtTitle.innerHTML = "Social";
         this.$btnLogin.innerHTML = "Login";
         this.$btnGoToRegister.innerHTML = "Go to Register";
         this.$btnGoToRegister.addEventListener('click', this.handleGoToRegister);
@@ -29,6 +29,8 @@ class Login{
         this.$form.appendChild(this.$inputGroupEmail.$container);
         this.$form.appendChild(this.$inputGroupPassword.$container);
         this.$form.appendChild(this.$actions);
+        this.$form.addEventListener("submit", this.handleSubmit);
+
 
         this.$actions.appendChild(this.$btnLogin);
         this.$actions.appendChild(this.$btnGoToRegister);
@@ -40,6 +42,18 @@ class Login{
         const registerScreen = new Register();
         setScreen(registerScreen.$container);
     };  
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const email = this.$inputGroupEmail.getValue();
+        const password = this.$inputGroupPassword.getValue();
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            console.log(userCredential);
+        });
+
+    }
 }
 
 
