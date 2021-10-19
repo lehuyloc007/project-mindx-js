@@ -11,7 +11,21 @@
 </head>
 <body>
     <div id="app"></div>
-    <h1>aa</h1>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCP0rlay9hjmbXu71k9EXCZfhj5RlxKJxQ",
+            authDomain: "project-social-mindx.firebaseapp.com",
+            projectId: "project-social-mindx",
+            storageBucket: "project-social-mindx.appspot.com",
+            messagingSenderId: "803255139568",
+            appId: "1:803255139568:web:0b573dddb12287f38bd635"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();;
+      </script>
     <script src="index.js" type="module"></script>
 </body>
 </html>

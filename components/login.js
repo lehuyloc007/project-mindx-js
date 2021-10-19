@@ -1,88 +1,51 @@
-// function setFormMessage(formElement, type, message){
-//     const messageElement=formElement.querySelector(".form--message");
-
-import { CommonJsCreateEl } from "./shared/common";
-
-//     messageElement.textContent=message;
-//     messageElement.classList.remove("form__message--success", "form__message--error");
-//     messageElement.classList.add('form__message--${type}')
-// }
-
-// function setInputError(inputElement, message){
-//     inputElement.classList.add("form__input--error");
-//     inputElement.parentElement.querySelector(".form__input-error-message").textContent=message;
-// }
-//  function clearInputError(inputElement)
-//  inputElement.classList.remove("form__input--error");
-
-// document.addEventListener("DOMContentLoaded",()=>{
-//     const loginForm= document.querySelector("#login");
-//     const createAccountForm=document.querySelector("#createAccount");
-
-//     document.querySelector("#linkCreateAccount").addEventListener("click", e =>{
-//         e.preventDefault();
-//         loginForm.classList.add("form--hidden");
-//         createAccountForm.classList.remove("form--hidden");
-//     });
-
-//     document.querySelector("#linkLogin").addEventListener("click",e =>{
-//         e.preventDefault();
-//         loginForm.classList.remove("form--hidden");
-//         createAccountForm.classList.add("form--hidden");
-//     })
-
-//     loginForm.addEventListener("submit",e=>{
-//         e.preventDefault();
-
-//         setFormMessage(loginForm, "error", "Invalid username/password comination");
-//     })
-
-//     document.querySelectorAll(".form__input").forEach(inputElement=>{
-//         inputElement.addEventListener("blur", e=>{
-//             if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length<10){
-//                 setInputError(inputElement,"Username must be at least 10 characters in length");
-//             }
-//         });
-//         inputElement.addEventListener("input", e=>{
-//             clearInputError(inputElement);
-//         })
-//     })
-// })
-
+import { commonJsCreateEl ,commonJsAddClass, setScreen } from "./shared/common.js";
+import { InputGroup } from "./shared/inputGroup.js";
+import { Register } from "./register.js";
 class Login {
-    $container= CommonJsCreateEl ("div");
-    $txtTile= CommonJsCreateEl ("h3");
-    $form= document= CommonJsCreateEl("form");
-    $actions=CommonJsCreateEl("div");
-    $btnLogin=CommonJsCreateEl("button");
-    $btnGoToRegister=CommonJsCreateEl("button");
+    $container = commonJsCreateEl("div");
+    $colContainer = commonJsCreateEl("div");
+    $txtLogo = commonJsCreateEl("div");
+    $txtTitle = commonJsCreateEl("div");
+    $inputGroupEmail = new InputGroup("Email:", "email");
+    $inputGroupPassword = new InputGroup("Password:", "password");
+    $btnLogin = commonJsCreateEl("button");
+    $containerGoToRegister = commonJsCreateEl("div");
+    $btnGoToRegister = commonJsCreateEl("div");
 
-    constructor (){
-        this.$txtTile.innerHTML= "Login";
-        this.$btnLogin.innerHTML="Login";
-        this.$btnGoToRegister.innerHTML="Go to Register";
+    constructor() {
+        this.$txtLogo.innerHTML = "Social";
+        commonJsAddClass(this.$txtLogo, "fw-bolder", "p-3", "h1", "fst-italic");
 
-        this.$container.appendChild(this.$form);
+        this.$txtTitle.innerHTML = "Đăng nhập";
+        commonJsAddClass(this.$txtTitle, "border-bottom", "h5", "pb-2", "text-secondary", "mb-3");
 
-        this.$form.appendChild(this.$txtTile);
-        this.$form.appendChild(this.$actions);
+        this.$btnLogin.innerHTML = "Tiếp theo";
+        commonJsAddClass(this.$btnLogin, "btn", "btn-primary", "mt-4");
 
-        this.$actions.appendChild(this.$btnLogin);
-        this.$actions.appendChild(this.$btnGoToRegister);
+        this.$containerGoToRegister.innerHTML = "Bạn chưa có tài khoản";
+        this.$btnGoToRegister.innerHTML = "Đăng ký";
+        this.$btnGoToRegister.type = "button";
+        commonJsAddClass(this.$btnGoToRegister, "text-primary", "ps-2", "cursor-pointer");
+        this.$btnGoToRegister.addEventListener("click", this.handelGoToRegister)
+
+        this.$containerGoToRegister.appendChild(this.$btnGoToRegister);
+        commonJsAddClass(this.$containerGoToRegister, "mb-5", "mt-2", "d-flex", "align-items-center", "justify-content-center");
+
+        this.$colContainer.appendChild(this.$txtLogo);
+        this.$colContainer.appendChild(this.$txtTitle);
+        this.$colContainer.appendChild(this.$inputGroupEmail.$container);
+        this.$colContainer.appendChild(this.$inputGroupPassword.$container);
+        this.$colContainer.appendChild(this.$btnLogin);
+        this.$colContainer.appendChild(this.$containerGoToRegister);
+        commonJsAddClass(this.$colContainer, "col-11", "col-md-4", "text-center", "border", "bg-white", "my-5", "p-3", "rounded-3");
+        this.$container.appendChild(this.$colContainer)
+        commonJsAddClass(this.$container, "d-flex", "justify-content-center", "my-5");
     }
+    handelGoToRegister = () => {
+        const registerScreen = new Register();
+        setScreen(registerScreen.$container)
+    }
+    
 }
-export function validate() {
-                var email = document.getElementById("email").value;
-                var password = document.getElementById("password").value;
-                if (email== null || email== "") {
-                    alert("Please enter the email.");
-                    return false;
-                }
-                if (password == null || password == "") {
-                    alert("Please enter the password.");
-                    return false;
-                }
-                alert('Login successful');
-                
-            } 
-export {Login};
+
+export { Login };

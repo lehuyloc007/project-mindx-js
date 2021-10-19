@@ -12,32 +12,23 @@
     <script src="/components/login.js"></script>
 </head>
 <body class="bg-light">
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col-6 offset-3">
-                <div class="card text-center my-5 py-3 px-5">
-                    <h5 class="card-title p-3 h2 fst-italic">Social</h5>
-                    <h6 class="card-subtitle border-bottom h4 pb-2 text-secondary mb-3">Đăng nhập</h6>
-                    <form>
-                        <div class="form-floating mt-4">
-                            <input type="email" class="form-control" name="email" id="email" required>
-                            <label for="floatingInputValue" >Email</label>
-                        </div>
-                        <div class="form-floating mt-4">
-                            <input type="password" class="form-control" name="password" id="password" required>
-                            <label for="floatingInputValue">Mật khẩu</label>
-                        </div>
-            
-                        <div class="mt-4">
-                            <button type="button" class="btn btn-light text-secondary" onclick="validate()">Đăng nhập</button>
-                        </div>
-    
-                        <div class="mb-5 mt-2  d-flex align-items-center justify-content-center">
-                            Bạn chưa có tài khoản? 
-                            <button type="button" class="btn btn-white text-primary p-0 ps-2">Đăng ký</button>
-                        </div>
-                    </div>
-                    </form>
+    <div class="d-flex justify-content-center my-5">
+        <div class="col-11 col-md-4 text-center border bg-white my-5 p-3 rounded-3">
+            <div class="fw-bolder p-3 h2 fst-italic">Social</div>
+            <div class="border-bottom h5 pb-2 text-secondary mb-3">Đăng nhập</div>
+            <div class="form-floating mt-4">
+                <input type="email" class="form-control" name="email" id="email" required>
+                <label for="floatingInputValue" >Email</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input type="password" class="form-control" name="password" id="password" required>
+                <label for="floatingInputValue">Mật khẩu</label>
+            </div>
+            <button type="button" class="btn btn-light text-secondary mt-4" onclick="validate()">Đăng nhập</button>
+
+            <div class="mb-5 mt-2  d-flex align-items-center justify-content-center">
+                Bạn chưa có tài khoản? 
+                <button type="button" class="btn btn-white text-primary p-0 ps-2">Đăng ký</button>
             </div>
         </div>
     </div>

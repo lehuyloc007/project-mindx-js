@@ -1,16 +1,13 @@
-import { CommonJsCreateEl, CommonJsAddClass, CommonJsRemoveClass } from "./components/shared/common.js";
+import { setScreen } from "./components/shared/common.js";
+import { Home } from "./components/home.js";
+import { Login } from "./components/login.js";
 
-const app = document.getElementById("app");
-const hello = CommonJsCreateEl("h1")
-hello.innerHTML = "Hello World";
-CommonJsAddClass(hello, "red", "blue");
-CommonJsRemoveClass(hello, "red");
-
-const a = 5
-const txt='acb'
-const setScreen = ($container) => {
-    app.appendChild($container);
-}
-
-setScreen(hello);
-export { setScreen };
+firebase.auth().onAuthStateChanged((user) =>{
+    if(user != null) {
+        const chatScreen = new Home();
+        setScreen(chatScreen.$container)
+    }else {
+        const loginScreen = new Login();
+        setScreen(loginScreen.$container);
+    }
+});

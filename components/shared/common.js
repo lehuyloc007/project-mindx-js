@@ -1,11 +1,16 @@
-const CommonJsCreateEl = (name) => {
+const commonJsCreateEl = (name) => {
     return document.createElement(name);
 }
-const CommonJsAddClass = (element, ...className) => {
+const commonJsAddClass = (element, ...className) => {
     return element.classList.add(...className);
 }
-const CommonJsRemoveClass = (element, ...className) => {
+const commonJsRemoveClass = (element, ...className) => {
     return element.classList.remove(...className);
 }
+const app = document.getElementById("app");
+const setScreen = ($container) => {
+    app.innerHTML = "";
+    app.appendChild($container);
+}
 
-export { CommonJsCreateEl, CommonJsAddClass, CommonJsRemoveClass}
+export { commonJsCreateEl, commonJsAddClass, commonJsRemoveClass, setScreen}

@@ -22,6 +22,9 @@ a {
 .bg-FBFAFA {
     background: #FBFAFA;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
 .btn-home span:first-child {
     background: url('components/imgs/home-icon.svg');
 }
