@@ -3,7 +3,8 @@ import { MenuList } from "../shared/menuList.js";
 import { CreatePosts } from "./createPosts.js";
 
 class Menu {
-    $container = commonJsCreateEl("nav");
+    $container = commonJsCreateEl("div");
+    $bgMenuContainer = commonJsCreateEl("nav");
     $navContainer = commonJsCreateEl("div");
     $txtLogo = commonJsCreateEl("div");
     $btnMenu = commonJsCreateEl("button");
@@ -58,11 +59,12 @@ class Menu {
         this.$menuContainer.appendChild(this.$menuListContainer);
         
         commonJsAddClass(this.$navContainer, "container");
-        commonJsAddClass(this.$container, "navbar", "navbar-expand-md", "navbar-light", "bg-white", "border-bottom", "py-1", "fixed-top");
+        commonJsAddClass(this.$bgMenuContainer, "navbar", "navbar-expand-md", "navbar-light", "bg-white", "border-bottom", "py-1", "fixed-top");
         this.$navContainer.appendChild(this.$txtLogo);
         this.$navContainer.appendChild(this.$btnMenu);
         this.$navContainer.appendChild(this.$menuContainer);
-        this.$container.appendChild(this.$navContainer);
+        this.$bgMenuContainer.appendChild(this.$navContainer);
+        this.$container.appendChild(this.$bgMenuContainer);
         this.$container.appendChild(this.$modalCreatePosts.$container);
 
         this.$menuItemBtnLogoutContainer.setOnMenuClick(()=> {
