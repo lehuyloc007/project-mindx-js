@@ -21,7 +21,7 @@ class InputGroup {
     }
     setErrMessage = (errMsg) => {
         this.$errMessage.innerHTML = errMsg;
-        if (errMsg) {
+        if (!errMsg) {
             commonJsAddClass(this.$errMessage, "d-none");
         } else {
             commonJsRemoveClass(this.$errMessage, "d-none");

@@ -34,14 +34,14 @@ a {
 .btn-logout span:first-child {
     background: url('components/imgs/logout.svg');
 }
-.nav-link span {
+.nav-item span {
     font-size: 0.9rem;
-    line-height: 18px;
+    line-height: 16px;
 }
-.nav-link span:first-child {
-    background-size: 18px;
-    width: 18px;
-    height: 18px;
+.nav-item span:first-child {
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
     display: inline-block;
     background-repeat: no-repeat;
 }
