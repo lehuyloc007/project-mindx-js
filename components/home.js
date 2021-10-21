@@ -1,5 +1,5 @@
 import { commonJsAddClass, commonJsCreateEl } from "./shared/common.js";
-import { Menu } from "./home/menu.js";
+import { Menu } from "./shared/menu.js";
 import { PostsList } from "./home/postsList.js";
 
 class Home {

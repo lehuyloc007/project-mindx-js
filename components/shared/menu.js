@@ -1,6 +1,6 @@
-import { commonJsAddClass, commonJsCreateEl } from "../shared/common.js"
-import { MenuList } from "../shared/menuList.js";
-import { CreatePosts } from "./createPosts.js";
+import { commonJsAddClass, commonJsCreateEl } from "./common.js"
+import { MenuList } from "./menuList.js";
+import { CreatePosts } from "../home/createPosts.js";
 
 class Menu {
     $container = commonJsCreateEl("div");
