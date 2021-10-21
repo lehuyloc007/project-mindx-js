@@ -24,7 +24,7 @@ class ModalCommon {
         this.$btnCloseHeader.setAttribute("data-bs-dismiss", "modal");
         this.$btnCloseHeader.type = "button";
 
-        commonJsAddClass(this.$modalBody, "modal-footer");
+        commonJsAddClass(this.$modalBody, "modal-body");
         commonJsAddClass(this.$modalFooter, "modal-footer");
         commonJsAddClass(this.$btnCloseFooter, "btn", "btn-secondary", "btn-sm");
         this.$btnCloseFooter.innerHTML = "Đóng";
@@ -37,8 +37,8 @@ class ModalCommon {
         this.$modalContent.appendChild(this.$modalBody);
         this.$modalContent.appendChild(this.$modalFooter);
         this.$modalDialog.appendChild(this.$modalContent);
-        this.$container.appendChild(this.$modalContent);
-        this.$container.id = "cr";
+        this.$container.appendChild(this.$modalDialog);
+        this.modal = new bootstrap.Modal(this.$container)
         
 
         
@@ -57,7 +57,7 @@ class ModalCommon {
     showModal = (listener) => {
         console.log(listener)
         if(listener == true){
-            document.getElementById("cr").show();
+            this.modal.toggle(this.$container)
         }
     }
 }
