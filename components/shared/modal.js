@@ -29,12 +29,15 @@ class ModalCommon {
         commonJsAddClass(this.$btnCloseFooter, "btn", "btn-secondary", "btn-sm");
         this.$btnCloseFooter.innerHTML = "Đóng";
         this.$btnCloseFooter.type = "button";
-        commonJsAddClass(this.$btnSaveFooter, "btn", "btn-primary", "btn-sm");
+        commonJsAddClass(this.$btnSaveFooter, "btn", "btn-primary", "btn-sm", "ms-auto");
 
         this.$modalHeader.appendChild(this.$modalTitle);
         this.$modalHeader.appendChild(this.$btnCloseHeader);
         this.$modalContent.appendChild(this.$modalHeader);
         this.$modalContent.appendChild(this.$modalBody);
+        this.$modalContent.appendChild(this.$modalFooter);
+        this.$modalFooter.appendChild(this.$btnCloseFooter);
+        this.$modalFooter.appendChild(this.$btnSaveFooter);
         this.$modalContent.appendChild(this.$modalFooter);
         this.$modalDialog.appendChild(this.$modalContent);
         this.$container.appendChild(this.$modalDialog);
@@ -55,7 +58,6 @@ class ModalCommon {
         this.$btnSaveFooter.onclick = listener;
     }
     showModal = (listener) => {
-        console.log(listener)
         if(listener == true){
             this.modal.toggle(this.$container)
         }

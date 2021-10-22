@@ -84,18 +84,53 @@ a {
     height: 40px;
 }
 
-.icon-smile{
+
+.post-content:before {
+    content: attr(placeholder);
+    position:absolute;
+    display: inline-block;
+}
+.post-content div[contenteditable] {
+    z-index: 1;
+    position: relative;
+    background: white;
+}
+.post-content div[contenteditable]:empty {
+    background: transparent;
+}
+.post-content div:focus-visible {
+    outline: 0;
+}
+
+
+.icon-smile {
     background: url("components/imgs/icon-smile.svg") no-repeat;
     width: 30px;
     height: 30px;
     background-size: 30px;
+    cursor: pointer;
 }
 
-.icon-picture{
-    background: url("components/imgs/icon-picture.svg") no-repeat;
+.icon-picture {
     width: 30px;
     height: 30px;
+}
+.icon-picture label {
+    background: url("components/imgs/icon-picture.svg") no-repeat;
     background-size: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.icon-picture input {
+    width: 0;
+    height: 0;
+}
+
+.post-content-list-images img {
+    width: 50%;
+    padding: 10px;
 }
 
 .edit-profile-body img{
@@ -103,6 +138,7 @@ a {
     height: 80px;
    
 }
+
 .icon-pencil{
     background: url("components/imgs/icon-pencil.svg") no-repeat ;
     width: 30px;
@@ -111,5 +147,4 @@ a {
     top: 37%;
     left: 48%;
    
-
 }

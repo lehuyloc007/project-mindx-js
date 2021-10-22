@@ -21,4 +21,12 @@ const setScreen = ($container) => {
     app.appendChild($container);
 }
 
-export { commonJsCreateEl, commonJsAddClass, commonJsRemoveClass, setScreen, hasWhiteSpace, checkEmailValid}
+
+export { 
+    commonJsCreateEl,
+    commonJsAddClass, 
+    commonJsRemoveClass, 
+    setScreen, 
+    hasWhiteSpace,
+    checkEmailValid
+}

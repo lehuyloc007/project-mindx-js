@@ -72,6 +72,7 @@ class Menu {
         });
 
         this.$menuItemBtnCreatPostContainer.setOnMenuClick(()=> {
+            this.$modalCreatePosts.innerHTML = "";
             this.$modalCreatePosts.showModalCreatePost(true);
         });
 
