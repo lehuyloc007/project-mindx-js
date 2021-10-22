@@ -59,7 +59,9 @@ class ModalCommon {
     }
     showModal = (listener) => {
         if(listener == true){
-            this.modal.toggle(this.$container)
+            this.modal.show()
+        } else {
+            this.modal.hide();
         }
     }
 }

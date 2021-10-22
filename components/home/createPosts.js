@@ -17,10 +17,12 @@ class CreatePosts {
     $modalBodyPostsFooterPictureInput = commonJsCreateEl("input");
     $modalBodyPostsFooterPictureLabel = commonJsCreateEl("label");
     $modalErrMessage = commonJsCreateEl("div");
+    $modalSuccessMessage = commonJsCreateEl("div");
     $modalProgress = commonJsCreateEl("div");
     $modalProgressBar = commonJsCreateEl("div");
     $modalListImages = commonJsCreateEl("div");
 
+    listImages = [];
     constructor() {
         commonJsAddClass(this.$modalBodyInfoUser, "rounded-3", "create-post-body-info-user", "d-flex", "align-items-center", "mt-3");
         commonJsAddClass(this.$modalBodyInfoUserImg, "rounded-circle");
@@ -56,11 +58,14 @@ class CreatePosts {
         this.$containerBodyCreatePosts.appendChild(this.$modalBodyInfoUser);
         this.$containerBodyCreatePosts.appendChild(this.$modalBodyPostsContent);
 
-        commonJsAddClass(this.$modalListImages, "d-flex", 'post-content-list-images')
+        commonJsAddClass(this.$modalListImages, "post-content-list-images");
         this.$containerBodyCreatePosts.appendChild(this.$modalListImages);
 
         commonJsAddClass(this.$modalErrMessage, "alert", "alert-danger", "py-1", "mt-1", "d-none");
         this.$containerBodyCreatePosts.appendChild(this.$modalErrMessage);
+        commonJsAddClass(this.$modalSuccessMessage, "alert", "alert-success", "py-1", "mt-1", "d-none");
+        this.$containerBodyCreatePosts.appendChild(this.$modalSuccessMessage);
+        
         commonJsAddClass(this.$modalProgress, "progress", "mt-3", "d-none");
         commonJsAddClass(this.$modalProgressBar, "progress-bar");
         this.$modalProgress.appendChild(this.$modalProgressBar);
@@ -70,7 +75,20 @@ class CreatePosts {
 
         this.$modal.setHeader("Tạo bài viết");
         this.$modal.setBody(this.$containerBodyCreatePosts);
-        this.$modal.setOnConfirmClick("Đăng",this.$containerBodyCreatePosts);
+        this.$modal.setOnConfirmClick("Đăng", () => {
+            db.collection('posts').add({
+                email: firebase.auth().currentUser.email,
+                detail: this.$modalBodyPostsInput.innerHTML,
+                images: this.listImages,
+                like: [],
+                comment: [],
+                createAt: firebase.firestore.FieldValue.serverTimestamp(),
+            }).then(() => {
+                commonJsRemoveClass(this.$modalSuccessMessage, "d-none")
+                this.$modalSuccessMessage.innerHTML = "Tạo bài viết thành công";
+                this.showModalCreatePost(false)
+            })
+        });
         this.$container.appendChild(this.$modal.$container);
     }
     showModalCreatePost = (listener) => {
@@ -127,12 +145,10 @@ class CreatePosts {
                     commonJsAddClass(imgPreview, "card-img-top");
                     imgPreview.src = downloadURL;
                     this.$modalListImages.appendChild(imgPreview);
+                    this.listImages.push(downloadURL);
                 });
             }
             );
-
-
-           
         }
         
 
