@@ -8,9 +8,10 @@ class Home {
     $contentContainer = commonJsCreateEl("div");
     $rowContentContainer = commonJsCreateEl("div");
     $colLeftContentContainer = commonJsCreateEl("div");
-    $postsList = new PostsList();
-
-
+    
+    userInfo = null;
+    userActiveInfo = null;
+    listPosts = null;
     constructor(){
         //menu
         this.$container.appendChild(this.$menuContainer.$container);
@@ -25,9 +26,34 @@ class Home {
 
         //left
         commonJsAddClass(this.$colLeftContentContainer, "col", "col-md-6", "offset-md-1");
-        this.$colLeftContentContainer.appendChild(this.$postsList.$container);
 
-        
+
+        this.getUserInfo();
+    }
+    getUserInfo = () => {
+        this.userInfo = db.collection("users")
+        .where("email", "==", firebase.auth().currentUser.email)
+        .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if(change.type == "added")
+                this.userActiveInfo = change.doc.data();
+                this.getlistPosts(change.doc.data());
+            });
+        });
+    }
+    getlistPosts = (userActiveInfo) => {
+        this.listPosts = db.collection("posts")
+        .where("email", "in", userActiveInfo.followers)
+        .orderBy('createAt')
+        .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if(change.type == "added"){
+                    const $postsList = new PostsList(change.doc.data());
+                    $postsList.setIdPosts(change.doc.id);
+                    this.$colLeftContentContainer.appendChild($postsList.$container);
+                }
+            });
+        });
     }
 }
 export { Home }

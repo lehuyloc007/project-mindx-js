@@ -17,10 +17,11 @@ class CreatePosts {
     $modalBodyPostsFooterPictureInput = commonJsCreateEl("input");
     $modalBodyPostsFooterPictureLabel = commonJsCreateEl("label");
     $modalErrMessage = commonJsCreateEl("div");
-    $modalSuccessMessage = commonJsCreateEl("div");
     $modalProgress = commonJsCreateEl("div");
     $modalProgressBar = commonJsCreateEl("div");
     $modalListImages = commonJsCreateEl("div");
+    $modalSuccess = new ModalCommon();
+    $modalSuccessMessage = commonJsCreateEl("div");
 
     listImages = [];
     constructor() {
@@ -63,9 +64,8 @@ class CreatePosts {
 
         commonJsAddClass(this.$modalErrMessage, "alert", "alert-danger", "py-1", "mt-1", "d-none");
         this.$containerBodyCreatePosts.appendChild(this.$modalErrMessage);
-        commonJsAddClass(this.$modalSuccessMessage, "alert", "alert-success", "py-1", "mt-1", "d-none");
-        this.$containerBodyCreatePosts.appendChild(this.$modalSuccessMessage);
         
+
         commonJsAddClass(this.$modalProgress, "progress", "mt-3", "d-none");
         commonJsAddClass(this.$modalProgressBar, "progress-bar");
         this.$modalProgress.appendChild(this.$modalProgressBar);
@@ -76,23 +76,44 @@ class CreatePosts {
         this.$modal.setHeader("Tạo bài viết");
         this.$modal.setBody(this.$containerBodyCreatePosts);
         this.$modal.setOnConfirmClick("Đăng", () => {
-            db.collection('posts').add({
-                email: firebase.auth().currentUser.email,
-                detail: this.$modalBodyPostsInput.innerHTML,
-                images: this.listImages,
-                like: [],
-                comment: [],
-                createAt: firebase.firestore.FieldValue.serverTimestamp(),
-            }).then(() => {
-                commonJsRemoveClass(this.$modalSuccessMessage, "d-none")
-                this.$modalSuccessMessage.innerHTML = "Tạo bài viết thành công";
-                this.showModalCreatePost(false)
-            })
+            if (this.$modalBodyPostsInput.innerText.length > 0) {
+                this.$modalErrMessage.innerHTML = "";
+                commonJsAddClass(this.$modalErrMessage, "d-none");
+                db.collection('posts').add({
+                    email: firebase.auth().currentUser.email,
+                    detail: this.$modalBodyPostsInput.innerHTML,
+                    images: this.listImages,
+                    like: [],
+                    comment: [],
+                    createAt: firebase.firestore.FieldValue.serverTimestamp(),
+                }).then(() => {
+                    this.showModalCreatePost(false);
+                    this.resetModalCreatePost();
+                    this.$modalSuccess.showModal(true)
+                })
+            } else {
+                this.$modalErrMessage.innerHTML = "Bạn chưa nhập nội dung bài viết";
+                commonJsRemoveClass(this.$modalErrMessage, "d-none");
+            }
         });
+
+        commonJsAddClass(this.$modalSuccessMessage, "alert", "alert-success", "py-1", "mt-3");
+        this.$modalSuccessMessage.innerHTML = "Tạo bài viết thành công";
+        this.$modalSuccess.setHeader("Thông báo");
+        this.$modalSuccess.setBody(this.$modalSuccessMessage);
         this.$container.appendChild(this.$modal.$container);
+        this.$container.appendChild(this.$modalSuccess.$container);
+    }
+    resetModalCreatePost = () => {
+        this.$modalBodyPostsInput.innerHTML = "";
+        this.$modalListImages.innerHTML = "";
+        this.listImages = [];
+        this.$modalErrMessage.innerHTML = "";
+        commonJsAddClass(this.$modalErrMessage, "d-none");
     }
     showModalCreatePost = (listener) => {
         this.$modal.showModal(listener);
+        this.resetModalCreatePost();
     }
     handleBtnEmoClick = () => {
         const iconEmo = commonJsCreateEl("span");

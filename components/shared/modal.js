@@ -29,6 +29,7 @@ class ModalCommon {
         commonJsAddClass(this.$btnCloseFooter, "btn", "btn-secondary", "btn-sm");
         this.$btnCloseFooter.innerHTML = "Đóng";
         this.$btnCloseFooter.type = "button";
+        this.$btnCloseFooter.setAttribute("data-bs-dismiss", "modal");
         commonJsAddClass(this.$btnSaveFooter, "btn", "btn-primary", "btn-sm", "ms-auto");
 
         this.$modalHeader.appendChild(this.$modalTitle);
@@ -37,7 +38,6 @@ class ModalCommon {
         this.$modalContent.appendChild(this.$modalBody);
         this.$modalContent.appendChild(this.$modalFooter);
         this.$modalFooter.appendChild(this.$btnCloseFooter);
-        this.$modalFooter.appendChild(this.$btnSaveFooter);
         this.$modalContent.appendChild(this.$modalFooter);
         this.$modalDialog.appendChild(this.$modalContent);
         this.$container.appendChild(this.$modalDialog);
@@ -54,6 +54,7 @@ class ModalCommon {
         this.$modalTitle.innerHTML = title;
     }
     setOnConfirmClick = (btnname,listener) => {
+        this.$modalFooter.appendChild(this.$btnSaveFooter);
         this.$btnSaveFooter.innerHTML = btnname;
         this.$btnSaveFooter.onclick = listener;
     }
