@@ -93,7 +93,6 @@ class PostsListItem {
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    console.log(change.doc.data().email)
                     const $commentItem = new CommentItem(change.doc.data().detail, change.doc.data().email);
                     this.$listComment.appendChild($commentItem.$container);
                 }

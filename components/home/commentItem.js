@@ -19,7 +19,6 @@ class CommentItem {
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added")
-                console.log(change.doc.data().displayName)
                 this.$txtUserComment.innerHTML = change.doc.data().displayName;
             });
         });
