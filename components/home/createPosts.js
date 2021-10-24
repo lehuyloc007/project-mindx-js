@@ -84,7 +84,6 @@ class CreatePosts {
                     detail: this.$modalBodyPostsInput.innerHTML,
                     images: this.listImages,
                     like: [],
-                    comment: [],
                     createAt: firebase.firestore.FieldValue.serverTimestamp(),
                 }).then(() => {
                     this.showModalCreatePost(false);

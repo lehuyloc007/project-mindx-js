@@ -111,8 +111,8 @@ class Register {
                     email: firebase.auth().currentUser.email,
                     displayName: displayName,
                     photoURL: "",
-                    followers: 0,
-                    Watching: 0,
+                    followers: [],
+                    Watching: [],
                     description: ""
                 }).then(() => {
                     firebase.auth().currentUser.sendEmailVerification()
