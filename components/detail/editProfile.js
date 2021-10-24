@@ -32,7 +32,6 @@ class EditProfile {
   $userEmail;
 
   constructor(userInfor) {
-    console.log(userInfor);
     this.$userEmail = userInfor.email;
     commonJsAddClass(
       this.$avatarContainer,
@@ -204,7 +203,6 @@ class EditProfile {
     const userName = this.$userNameInput.value;
     const userDes = this.$describeInput.value;
 
-    console.log(this.$userEmail);
     db.collection("users")
       .doc(this.$userEmail)
       .update({
@@ -213,25 +211,11 @@ class EditProfile {
         photoURL: avatar,
       })
       .then(() => {
-        console.log("Document successfully updated!");
+        this.showEditProfileModal(false);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    // firebase
-    //   .database()
-    //   .ref("users/" + this.$userEmail)
-    //   .set(
-    //     {
-    //       displayName: userName,
-    //       description: userDes,
-    //       photoURL: avatar,
-    //     },
-    //     (error) => {
-    //       if (error) {
-    //         // The write failed...
-    //       } else {
-    //         // Data saved successfully!
-    //       }
-    //     }
-    //   );
   };
 }
 

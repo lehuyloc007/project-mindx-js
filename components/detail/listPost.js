@@ -9,7 +9,6 @@ class ListPost {
   $postTitleText = commonJsCreateEl("div");
   $postListWrapper = commonJsCreateEl("div");
   $postListContainer = commonJsCreateEl("div");
-  $postItem = new PostItem();
 
   constructor() {
     commonJsAddClass(this.$postTitleWrapper, "border-bottom", "mt-3", "pb-1");
@@ -37,7 +36,6 @@ class ListPost {
     this.$postTitleContainer.appendChild(this.$postTitleText);
     this.$postTitleWrapper.appendChild(this.$postTitleContainer);
     this.$container.appendChild(this.$postTitleWrapper);
-    this.$postListContainer.appendChild(this.$postItem.$container);
     this.$postListWrapper.appendChild(this.$postListContainer);
     this.$container.appendChild(this.$postListWrapper);
   }

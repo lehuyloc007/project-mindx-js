@@ -28,6 +28,7 @@ class UserInfor {
   $followingTextLeft = commonJsCreateEl("span");
   $followingTextRight = commonJsCreateEl("span");
   $modalEditProfile;
+  $totalPostNumber = 0;
 
   constructor(userInfor) {
     this.$modalEditProfile = new EditProfile(userInfor);
@@ -83,11 +84,13 @@ class UserInfor {
 
     this.$userName.innerText = userInfor.displayName;
     this.$btnText.innerText = "Chỉnh sửa trang cá nhân";
-    this.$postNumber.innerText = "8";
+    this.$postNumber.innerText = 0;
     this.$postText.innerText = "Bài Viết";
-    this.$followerNumber.innerText = "5";
+    this.$followerNumber.innerText =
+      userInfor.followers?.length > 0 ? userInfor.followers?.length : 0;
     this.$followerText.innerText = "người theo dõi";
-    this.$followingNumber.innerText = "10";
+    this.$followingNumber.innerText =
+      userInfor.watching?.length > 0 ? userInfor.watching?.length : 0;
     this.$followingTextLeft.innerText = "Đang theo dõi";
     this.$followingTextRight.innerText = "người dùng";
 
@@ -121,10 +124,28 @@ class UserInfor {
     this.$container.appendChild(this.$inforContainer);
     this.$containerWrapper.appendChild(this.$container);
     this.$containerWrapper.appendChild(this.$modalEditProfile.$container);
+
+    this.getTotalPostNumber(userInfor.email);
   }
 
   showEditProfileModal = () => {
     this.$modalEditProfile.showEditProfileModal(true);
+  };
+
+  getTotalPostNumber = (number) => {
+    this.$postNumber.innerText = number;
+  };
+
+  getTotalPostNumber = (email) => {
+    db.collection("posts")
+      .where("email", "==", email)
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          this.$totalPostNumber++;
+        });
+        console.log(this.$totalPostNumber);
+        this.$postNumber.innerText = this.$totalPostNumber;
+      });
   };
 }
 
