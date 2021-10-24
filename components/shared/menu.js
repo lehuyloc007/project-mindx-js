@@ -53,6 +53,9 @@ class Menu {
         this.$menuListContainer.appendChild(this.$menuItemBtnCreatPostContainer.$container);
         this.$menuListContainer.appendChild(this.$menuItemBtnUserContainer.$container);
         this.$menuListContainer.appendChild(this.$menuItemBtnLogoutContainer.$container);
+        this.$menuItemBtnLogoutContainer.setOnMenuClick(()=> {
+            firebase.auth().signOut();
+        });
 
         commonJsAddClass(this.$menuContainer, "collapse", "navbar-collapse", "justify-content-end");
         this.$menuContainer.id = "collapsibleNavId";
@@ -67,28 +70,13 @@ class Menu {
         this.$container.appendChild(this.$bgMenuContainer);
         this.$container.appendChild(this.$modalCreatePosts.$container);
 
-        this.$menuItemBtnLogoutContainer.setOnMenuClick(()=> {
-            firebase.auth().signOut();
-        });
-
         this.$menuItemBtnCreatPostContainer.setOnMenuClick(()=> {
             this.$modalCreatePosts.innerHTML = "";
             this.$modalCreatePosts.showModalCreatePost(true);
         });
-
-        // db.collection("users")
-        // .where("email", "==", firebase.auth().currentUser.email)
-        // .onSnapshot((snapshot) => {
-        //     snapshot.docChanges().forEach((change) => {
-        //         if(change.type == "added") {
-
-        //         }
-        //     });
-        // });
     }
-
-    handelLogout = () => {
-        firebase.auth().signOut();
+    setBackgroungIconUserActive = (imgUser) => {
+        this.$menuItemBtnUserContainer.setBackgroungIconUser(imgUser);
     }
 }
 export { Menu }

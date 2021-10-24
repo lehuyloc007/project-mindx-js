@@ -9,9 +9,6 @@ class Home {
     $rowContentContainer = commonJsCreateEl("div");
     $colLeftContentContainer = commonJsCreateEl("div");
     
-    userInfo = null;
-    userActiveInfo = null;
-    listPosts = null;
     constructor(){
         //menu
         this.$container.appendChild(this.$menuContainer.$container);
@@ -31,18 +28,18 @@ class Home {
         this.getUserInfo();
     }
     getUserInfo = () => {
-        this.userInfo = db.collection("users")
+        db.collection("users")
         .where("email", "==", firebase.auth().currentUser.email)
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added")
-                this.userActiveInfo = change.doc.data();
                 this.getlistPosts(change.doc.data());
+                this.$menuContainer.setBackgroungIconUserActive(change.doc.data().photoURL)
             });
         });
     }
     getlistPosts = (userActiveInfo) => {
-        this.listPosts = db.collection("posts")
+        db.collection("posts")
         .where("email", "in", userActiveInfo.followers)
         .orderBy('createAt')
         .onSnapshot((snapshot) => {

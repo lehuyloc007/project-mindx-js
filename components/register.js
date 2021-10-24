@@ -110,7 +110,7 @@ class Register {
                 db.collection('users').add({
                     email: firebase.auth().currentUser.email,
                     displayName: displayName,
-                    photoURL: "",
+                    photoURL: "https://firebasestorage.googleapis.com/v0/b/project-social-mindx.appspot.com/o/images%2Faccount-icon.svg?alt=media&token=b434b7aa-406e-4f05-bde2-ea39197dcf14",
                     followers: [],
                     Watching: [],
                     description: ""
