@@ -1,6 +1,8 @@
 import { commonJsAddClass, commonJsCreateEl } from "../shared/common.js";
+import { EditProfile } from "./editProfile.js";
 
 class UserInfor {
+  $containerWrapper = commonJsCreateEl("div");
   $container = commonJsCreateEl("div");
   $avatarContainer = commonJsCreateEl("div");
   $avatar = commonJsCreateEl("div");
@@ -25,8 +27,10 @@ class UserInfor {
   $followingNumber = commonJsCreateEl("span");
   $followingTextLeft = commonJsCreateEl("span");
   $followingTextRight = commonJsCreateEl("span");
+  $modalEditProfile;
 
-  constructor() {
+  constructor(userInfor) {
+    this.$modalEditProfile = new EditProfile(userInfor);
     commonJsAddClass(
       this.$avatar,
       "avatar",
@@ -77,7 +81,7 @@ class UserInfor {
     commonJsAddClass(this.$followingTextLeft, "text-868686", "me-1");
     commonJsAddClass(this.$followingTextRight, "text-868686");
 
-    this.$userName.innerText = "Minh Hiếu Cute";
+    this.$userName.innerText = userInfor.displayName;
     this.$btnText.innerText = "Chỉnh sửa trang cá nhân";
     this.$postNumber.innerText = "8";
     this.$postText.innerText = "Bài Viết";
@@ -91,6 +95,8 @@ class UserInfor {
 
     this.$editBtn.appendChild(this.$btnText);
     this.$editBtn.appendChild(this.$btnIcon);
+    this.$editBtn.addEventListener("click", this.showEditProfileModal);
+
     this.$nameAndEditContainer.appendChild(this.$userName);
     this.$nameAndEditContainer.appendChild(this.$editBtn);
     this.$nameAndEditWrapper.appendChild(this.$nameAndEditContainer);
@@ -113,7 +119,13 @@ class UserInfor {
 
     this.$container.appendChild(this.$avatarContainer);
     this.$container.appendChild(this.$inforContainer);
+    this.$containerWrapper.appendChild(this.$container);
+    this.$containerWrapper.appendChild(this.$modalEditProfile.$container);
   }
+
+  showEditProfileModal = () => {
+    this.$modalEditProfile.showEditProfileModal(true);
+  };
 }
 
 export { UserInfor };
