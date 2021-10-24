@@ -1,6 +1,6 @@
 import { commonJsAddClass, commonJsCreateEl } from "./shared/common.js";
 import { Menu } from "./shared/menu.js";
-import { PostsList } from "./home/postsList.js";
+import { PostsListItem } from "./home/postsListItem.js";
 
 class Home {
     $container = commonJsCreateEl("div");
@@ -48,7 +48,7 @@ class Home {
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    const $postsList = new PostsList(change.doc.data());
+                    const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
                     $postsList.setIdPosts(change.doc.id);
                     this.$colLeftContentContainer.appendChild($postsList.$container);
                 }

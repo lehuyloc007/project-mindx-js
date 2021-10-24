@@ -1,7 +1,8 @@
 import { commonJsCreateEl, commonJsAddClass } from "../shared/common.js";
+import { CommentItem } from "./commentItem.js";
 import { PostsCarousel } from "./postsCarousel.js";
 
-class PostsList {
+class PostsListItem {
     $container = commonJsCreateEl("div");
     $cardHeader = commonJsCreateEl("div");
     $imagesUserPost = commonJsCreateEl("img");
@@ -12,15 +13,17 @@ class PostsList {
     $likeCountIcon = commonJsCreateEl("span");
     $likeCountNumber = commonJsCreateEl("span");
 
+    $listComment = commonJsCreateEl("div");
     $inputCommentContainer = commonJsCreateEl("form");
     $inputComment = commonJsCreateEl("input");
     $buttonComment = commonJsCreateEl("button");
 
+  
+
 
     
-    userPosts = null;
     activeIdPosts = null;
-    constructor(dataItemPosts) {
+    constructor(dataItemPosts, postsId) {
         
         //card header
         
@@ -48,6 +51,10 @@ class PostsList {
         this.$likeCount.appendChild(this.$likeCountIcon);
         this.$likeCount.appendChild(this.$likeCountNumber);
         this.$cardBody.appendChild(this.$likeCount);
+
+        this.getCommentPosts(postsId);
+        commonJsAddClass(this.$listComment, "list-comment");
+        this.$cardBody.appendChild(this.$listComment)
         
         commonJsAddClass(this.$inputCommentContainer, "action-comment", "py-2", "mt-3", "border-top", "input-group");
         commonJsAddClass(this.$inputComment, "form-control", "border-0");
@@ -70,13 +77,26 @@ class PostsList {
         this.activeIdPosts = idPosts;
     }
     getInfoUserPosts = (dataUserPosts) => {
-        this.userPosts = db.collection("users")
+        db.collection("users")
         .where("email", "==", dataUserPosts.email)
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added")
                 this.$imagesUserPost.src = change.doc.data().photoURL;
                 this.$nameUserPost.innerHTML = change.doc.data().displayName;
+            });
+        });
+    }
+    getCommentPosts = (postsId) => { db.collection("comments")
+        .where("postsId", "==", postsId)
+        .orderBy('createAt')
+        .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if(change.type == "added"){
+                    console.log(change.doc.data().email)
+                    const $commentItem = new CommentItem(change.doc.data().detail, change.doc.data().email);
+                    this.$listComment.appendChild($commentItem.$container);
+                }
             });
         });
     }
@@ -88,9 +108,11 @@ class PostsList {
             postsId: this.activeIdPosts,
             detail: this.$inputComment.value,
             createAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+            this.$inputComment.value = "";
         })
         
     }
     
 }
-export { PostsList }
+export { PostsListItem }
