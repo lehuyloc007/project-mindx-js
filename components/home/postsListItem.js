@@ -42,7 +42,7 @@ class PostsListItem {
         this.$container.appendChild(this.$cardHeader);
         this.$contentPosts.innerHTML= dataItemPosts.detail;
         this.$cardBody.appendChild(this.$contentPosts);
-        const carouselPost = new PostsCarousel(dataItemPosts.images); 
+        const carouselPost = new PostsCarousel(dataItemPosts.images, postsId); 
         this.$cardBody.appendChild(carouselPost.$container);
 
         commonJsAddClass(this.$likeCount, "d-flex", "align-items-center", "like-count", "mt-2");
@@ -50,6 +50,9 @@ class PostsListItem {
         this.$likeCountNumber.innerHTML = dataItemPosts.like.length + " lượt thích";
         this.$likeCount.appendChild(this.$likeCountIcon);
         this.$likeCount.appendChild(this.$likeCountNumber);
+        this.$likeCount.addEventListener("click", () => {
+            this.handelLike(dataItemPosts);
+        });
         this.$cardBody.appendChild(this.$likeCount);
 
         this.getCommentPosts(postsId);
@@ -64,7 +67,10 @@ class PostsListItem {
         this.$buttonComment.innerHTML = "Đăng";
         this.$inputCommentContainer.appendChild(this.$inputComment);
         this.$inputCommentContainer.appendChild(this.$buttonComment);
-        this.$inputCommentContainer.addEventListener("submit", this.handelComment);
+        this.$inputCommentContainer.addEventListener("submit", (event) => {
+            event.preventDefault();
+            this.handelComment(postsId);
+        });
         this.$cardBody.appendChild(this.$inputCommentContainer);
 
 
@@ -73,9 +79,7 @@ class PostsListItem {
         this.getInfoUserPosts(dataItemPosts)
         
     }
-    setIdPosts = (idPosts) => {
-        this.activeIdPosts = idPosts;
-    }
+
     getInfoUserPosts = (dataUserPosts) => {
         db.collection("users")
         .where("email", "==", dataUserPosts.email)
@@ -87,6 +91,7 @@ class PostsListItem {
             });
         });
     }
+
     getCommentPosts = (postsId) => { db.collection("comments")
         .where("postsId", "==", postsId)
         .orderBy('createAt')
@@ -99,18 +104,29 @@ class PostsListItem {
             });
         });
     }
-    handelComment = (event) => {
-        event.preventDefault();
+
+    handelLike = (postsId) => {
         if (!this.$inputComment.value || !firebase.auth().currentUser.email) return 
         db.collection('comments').add({
             email: firebase.auth().currentUser.email,
-            postsId: this.activeIdPosts,
+            postsId: postsId,
             detail: this.$inputComment.value,
             createAt: firebase.firestore.FieldValue.serverTimestamp(),
         }).then(() => {
             this.$inputComment.value = "";
         })
-        
+    }
+
+    handelComment = (postsId) => {
+        if (!this.$inputComment.value || !firebase.auth().currentUser.email) return 
+        db.collection('comments').add({
+            email: firebase.auth().currentUser.email,
+            postsId: postsId,
+            detail: this.$inputComment.value,
+            createAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+            this.$inputComment.value = "";
+        })
     }
     
 }

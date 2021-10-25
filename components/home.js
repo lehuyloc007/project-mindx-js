@@ -40,13 +40,12 @@ class Home {
     }
     getlistPosts = (userActiveInfo) => {
         db.collection("posts")
-        .where("email", "in", userActiveInfo.followers)
+        .where("email", "in", userActiveInfo.watchings)
         .orderBy('createAt')
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
                     const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                    $postsList.setIdPosts(change.doc.id);
                     this.$colLeftContentContainer.appendChild($postsList.$container);
                 }
             });

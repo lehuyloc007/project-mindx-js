@@ -19,7 +19,6 @@ class MenuList {
         this.$itemMenu.onclick = listener;
     }
     setBackgroungIconUser = (imgUser) => {
-        console.log(imgUser)
         this.$iconMenu.style.backgroundImage = "url(" + imgUser + ")";
     }
 
