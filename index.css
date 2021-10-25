@@ -53,12 +53,15 @@ a {
     height: 40vh;
 }
 .like-count span:first-child {
-    background: url('components/imgs/icon-like.svg');
+    background: url('components/imgs/icon-like.svg') no-repeat;
     background-size: 18px;
     width: 18px;
     height: 18px;
     display: inline-block;
-    background-repeat: no-repeat;
+}
+.like-count.like-count-red span:first-child {
+    background: url('components/imgs/icon-like-red.svg') no-repeat;
+    background-size: 18px;
 }
 
 .list-friend img {

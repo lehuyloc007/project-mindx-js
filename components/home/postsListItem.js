@@ -45,13 +45,17 @@ class PostsListItem {
         const carouselPost = new PostsCarousel(dataItemPosts.images, postsId); 
         this.$cardBody.appendChild(carouselPost.$container);
 
-        commonJsAddClass(this.$likeCount, "d-flex", "align-items-center", "like-count", "mt-2");
+        if(!dataItemPosts.likes.includes(firebase.auth().currentUser.email)) {
+            commonJsAddClass(this.$likeCount, "d-flex", "align-items-center", "like-count", "mt-2", "cursor-pointer");
+        }else {
+            commonJsAddClass(this.$likeCount, "d-flex", "align-items-center", "like-count", "mt-2", "cursor-pointer", "like-count-red");
+        };
         commonJsAddClass(this.$likeCountNumber, "ms-1", "h6");
-        this.$likeCountNumber.innerHTML = dataItemPosts.like.length + " lượt thích";
+        this.$likeCountNumber.innerHTML = dataItemPosts.likes.length + " lượt thích";
         this.$likeCount.appendChild(this.$likeCountIcon);
         this.$likeCount.appendChild(this.$likeCountNumber);
         this.$likeCount.addEventListener("click", () => {
-            this.handelLike(dataItemPosts);
+            this.handelLike(dataItemPosts, postsId);
         });
         this.$cardBody.appendChild(this.$likeCount);
 
@@ -94,7 +98,7 @@ class PostsListItem {
 
     getCommentPosts = (postsId) => { db.collection("comments")
         .where("postsId", "==", postsId)
-        .orderBy('createAt')
+        .orderBy('createAt', 'asc')
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
@@ -105,16 +109,20 @@ class PostsListItem {
         });
     }
 
-    handelLike = (postsId) => {
-        if (!this.$inputComment.value || !firebase.auth().currentUser.email) return 
-        db.collection('comments').add({
-            email: firebase.auth().currentUser.email,
-            postsId: postsId,
-            detail: this.$inputComment.value,
-            createAt: firebase.firestore.FieldValue.serverTimestamp(),
-        }).then(() => {
-            this.$inputComment.value = "";
+    handelLike = (dataItemPosts, postsId) => {
+        if(dataItemPosts.likes.includes(firebase.auth().currentUser.email)) return;
+        dataItemPosts.likes.push(firebase.auth().currentUser.email)
+        db.collection("posts")
+        .doc(postsId)
+        .update({
+            likes: dataItemPosts.likes,
         })
+        .then(() => {
+            this.$likeCountNumber.innerHTML = dataItemPosts.likes.length + " lượt thích";
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     handelComment = (postsId) => {

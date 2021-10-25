@@ -8,7 +8,11 @@ class Home {
     $contentContainer = commonJsCreateEl("div");
     $rowContentContainer = commonJsCreateEl("div");
     $colLeftContentContainer = commonJsCreateEl("div");
+    $listPostsContainer = commonJsCreateEl("div");
+    $btnLoadMorePosts = commonJsCreateEl("div");
     
+    lastestDoc = null;
+    lstwatchings = null;
     constructor(){
         //menu
         this.$container.appendChild(this.$menuContainer.$container);
@@ -23,8 +27,13 @@ class Home {
 
         //left
         commonJsAddClass(this.$colLeftContentContainer, "col", "col-md-6", "offset-md-1");
-
-
+        this.$colLeftContentContainer.appendChild(this.$listPostsContainer);
+        commonJsAddClass(this.$btnLoadMorePosts, "btn", "btn-outline-secondary");
+        this.$btnLoadMorePosts.innerHTML = "Hiển thị thêm bài viết";
+        this.$btnLoadMorePosts.addEventListener("click", () => {
+            this.getlistPosts();
+        });
+        this.$colLeftContentContainer.appendChild(this.$btnLoadMorePosts);
         this.getUserInfo();
     }
     getUserInfo = () => {
@@ -33,22 +42,29 @@ class Home {
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added")
-                this.getlistPosts(change.doc.data());
+                this.lstwatchings = change.doc.data().watchings;
+                this.getlistPosts();
                 this.$menuContainer.setBackgroungIconUserActive(change.doc.data().photoURL)
             });
         });
     }
-    getlistPosts = (userActiveInfo) => {
+    getlistPosts = () => {
+        console.log(this.lastestDoc)
         db.collection("posts")
-        .where("email", "in", userActiveInfo.watchings)
-        .orderBy('createAt')
+        .where("email", "in", this.lstwatchings)
+        .orderBy('createAt', 'asc')
+        //.endBefore(this.lastestDoc || 0)
+        .limit(5)
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
                     const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                    this.$colLeftContentContainer.appendChild($postsList.$container);
+                    this.$listPostsContainer.appendChild($postsList.$container);
                 }
             });
+            console.log(snapshot.docs.length-1)
+            this.lastestDoc = snapshot.docs[snapshot.docs.length-1];
+                console.log(this.lastestDoc)
         });
     }
 }

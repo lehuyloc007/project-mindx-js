@@ -83,7 +83,7 @@ class CreatePosts {
                     email: firebase.auth().currentUser.email,
                     detail: this.$modalBodyPostsInput.innerHTML,
                     images: this.listImages,
-                    like: [],
+                    likes: [],
                     createAt: firebase.firestore.FieldValue.serverTimestamp(),
                 }).then(() => {
                     this.showModalCreatePost(false);
