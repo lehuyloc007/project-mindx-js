@@ -9,7 +9,9 @@ import { ChangePassword } from "./changePassword.js";
 class EditProfile {
   $container = commonJsCreateEl("div");
   $modal = new ModalCommon();
+  $modalSuccess = new ModalCommon();
   $modalChangePassword = new ChangePassword();
+  $modalSuccessMessage = commonJsCreateEl("div");
   $bodyModalContainer = commonJsCreateEl("div");
   $avatarContainer = commonJsCreateEl("div");
   $avatarImg = commonJsCreateEl("img");
@@ -29,10 +31,12 @@ class EditProfile {
   $modalErrorMsg = commonJsCreateEl("div");
   $modalProgress = commonJsCreateEl("div");
   $modalProgressBar = commonJsCreateEl("div");
+  $userId;
   $userEmail;
 
-  constructor(userInfor) {
+  constructor(userInfor,userId) {
     this.$userEmail = userInfor.email;
+    this.$userId = userId;
     commonJsAddClass(
       this.$avatarContainer,
       "rounded-3",
@@ -84,6 +88,7 @@ class EditProfile {
     );
     commonJsAddClass(this.$modalProgress, "progress", "mt-3", "d-none");
     commonJsAddClass(this.$modalProgressBar, "progress-bar");
+    commonJsAddClass(this.$modalSuccessMessage, "alert", "alert-success", "py-1", "mt-3");
 
     this.$userNameInput.setAttribute("type", "text");
     this.$userNameLabel.setAttribute("for", "floatingInputValue");
@@ -134,6 +139,11 @@ class EditProfile {
     this.$modal.setOnConfirmClick("Cập nhật", this.handleUpdateInfor);
     this.$modal.setBody(this.$bodyModalContainer);
 
+    this.$modalSuccessMessage.innerHTML = "Cập nhật tài khoản thành công";
+    this.$modalSuccess.setHeader("Thông báo");
+    this.$modalSuccess.setBody(this.$modalSuccessMessage);
+
+    this.$container.appendChild(this.$modalSuccess.$container);
     this.$container.appendChild(this.$modal.$container);
     this.$container.appendChild(this.$modalChangePassword.$container);
   }
@@ -204,7 +214,7 @@ class EditProfile {
     const userDes = this.$describeInput.value;
 
     db.collection("users")
-      .doc("QkIB4jFDBZDGviwWthnW")
+      .doc(this.$userId)
       .update({
         displayName: userName,
         description: userDes,
@@ -212,6 +222,7 @@ class EditProfile {
       })
       .then(() => {
         this.showEditProfileModal(false);
+        this.$modalSuccess.showModal(true);
       })
       .catch((error) => {
         console.log(error);
