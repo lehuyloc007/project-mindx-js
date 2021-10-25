@@ -1,6 +1,8 @@
 import { commonJsAddClass, commonJsCreateEl } from "../shared/common.js";
+import { EditProfile } from "./editProfile.js";
 
 class UserInfor {
+  $containerWrapper = commonJsCreateEl("div");
   $container = commonJsCreateEl("div");
   $avatarContainer = commonJsCreateEl("div");
   $avatar = commonJsCreateEl("div");
@@ -25,8 +27,11 @@ class UserInfor {
   $followingNumber = commonJsCreateEl("span");
   $followingTextLeft = commonJsCreateEl("span");
   $followingTextRight = commonJsCreateEl("span");
+  $modalEditProfile;
+  $totalPostNumber = 0;
 
-  constructor() {
+  constructor(userInfor) {
+    this.$modalEditProfile = new EditProfile(userInfor);
     commonJsAddClass(
       this.$avatar,
       "avatar",
@@ -77,13 +82,15 @@ class UserInfor {
     commonJsAddClass(this.$followingTextLeft, "text-868686", "me-1");
     commonJsAddClass(this.$followingTextRight, "text-868686");
 
-    this.$userName.innerText = "Minh Hiếu Cute";
+    this.$userName.innerText = userInfor.displayName;
     this.$btnText.innerText = "Chỉnh sửa trang cá nhân";
-    this.$postNumber.innerText = "8";
+    this.$postNumber.innerText = 0;
     this.$postText.innerText = "Bài Viết";
-    this.$followerNumber.innerText = "5";
+    this.$followerNumber.innerText =
+      userInfor.followers?.length > 0 ? userInfor.followers?.length : 0;
     this.$followerText.innerText = "người theo dõi";
-    this.$followingNumber.innerText = "10";
+    this.$followingNumber.innerText =
+      userInfor.watching?.length > 0 ? userInfor.watching?.length : 0;
     this.$followingTextLeft.innerText = "Đang theo dõi";
     this.$followingTextRight.innerText = "người dùng";
 
@@ -91,6 +98,8 @@ class UserInfor {
 
     this.$editBtn.appendChild(this.$btnText);
     this.$editBtn.appendChild(this.$btnIcon);
+    this.$editBtn.addEventListener("click", this.showEditProfileModal);
+
     this.$nameAndEditContainer.appendChild(this.$userName);
     this.$nameAndEditContainer.appendChild(this.$editBtn);
     this.$nameAndEditWrapper.appendChild(this.$nameAndEditContainer);
@@ -113,7 +122,31 @@ class UserInfor {
 
     this.$container.appendChild(this.$avatarContainer);
     this.$container.appendChild(this.$inforContainer);
+    this.$containerWrapper.appendChild(this.$container);
+    this.$containerWrapper.appendChild(this.$modalEditProfile.$container);
+
+    this.getTotalPostNumber(userInfor.email);
   }
+
+  showEditProfileModal = () => {
+    this.$modalEditProfile.showEditProfileModal(true);
+  };
+
+  getTotalPostNumber = (number) => {
+    this.$postNumber.innerText = number;
+  };
+
+  getTotalPostNumber = (email) => {
+    db.collection("posts")
+      .where("email", "==", email)
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          this.$totalPostNumber++;
+        });
+        console.log(this.$totalPostNumber);
+        this.$postNumber.innerText = this.$totalPostNumber;
+      });
+  };
 }
 
 export { UserInfor };
