@@ -9,6 +9,7 @@ class Home {
     $rowContentContainer = commonJsCreateEl("div");
     $colLeftContentContainer = commonJsCreateEl("div");
     $listPostsContainer = commonJsCreateEl("div");
+    $btnLoadMorePostsContainer = commonJsCreateEl("div");
     $btnLoadMorePosts = commonJsCreateEl("div");
     
     lastestDoc = null;
@@ -28,12 +29,12 @@ class Home {
         //left
         commonJsAddClass(this.$colLeftContentContainer, "col", "col-md-6", "offset-md-1");
         this.$colLeftContentContainer.appendChild(this.$listPostsContainer);
-        commonJsAddClass(this.$btnLoadMorePosts, "btn", "btn-outline-secondary");
+        commonJsAddClass(this.$btnLoadMorePostsContainer, "d-flex");
+        commonJsAddClass(this.$btnLoadMorePosts, "btn", "btn-outline-secondary", "my-5", "mx-auto");
         this.$btnLoadMorePosts.innerHTML = "Hiển thị thêm bài viết";
-        this.$btnLoadMorePosts.addEventListener("click", () => {
-            this.getlistPosts();
-        });
-        this.$colLeftContentContainer.appendChild(this.$btnLoadMorePosts);
+        this.$btnLoadMorePosts.addEventListener("click", this.getlistPosts);
+        this.$btnLoadMorePostsContainer.appendChild(this.$btnLoadMorePosts);
+        this.$colLeftContentContainer.appendChild(this.$btnLoadMorePostsContainer);
         this.getUserInfo();
     }
     getUserInfo = () => {
@@ -48,24 +49,32 @@ class Home {
             });
         });
     }
+    // handelScroll = () => {
+    //     console.log(1)
+    //     let triggerHeight = this.$container.scrollTop + this.$container.offsetHeight;
+    //     if (triggerHeight >= this.$container.scrollHeight) {
+    //         this.getlistPosts();
+    //     }
+    // }
     getlistPosts = () => {
-        console.log(this.lastestDoc)
-        db.collection("posts")
-        .where("email", "in", this.lstwatchings)
-        .orderBy('createAt', 'asc')
-        //.endBefore(this.lastestDoc || 0)
-        .limit(5)
-        .onSnapshot((snapshot) => {
+        if(this.lastestDoc === undefined) return;
+        let lstdataPosts = db.collection("posts")
+            .where("email", "in", this.lstwatchings)
+            .orderBy('createAt', 'desc')
+            .limit(5);
+        if(this.lastestDoc !== null) {
+            lstdataPosts =  lstdataPosts.startAfter(this.lastestDoc)
+        } 
+        lstdataPosts.onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
                     const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
                     this.$listPostsContainer.appendChild($postsList.$container);
                 }
             });
-            console.log(snapshot.docs.length-1)
             this.lastestDoc = snapshot.docs[snapshot.docs.length-1];
-                console.log(this.lastestDoc)
         });
+        
     }
 }
 export { Home }
