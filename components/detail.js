@@ -3,6 +3,7 @@ import { Menu } from "./shared/menu.js";
 import { UserInfor } from "./detail/userInfor.js";
 import { ListPost } from "./detail/listPost.js";
 import { PostItem } from "./detail/postItem.js";
+import { EditProfile } from "./detail/editProfile.js";
 
 class Detail {
   $container = commonJsCreateEl("div");
@@ -10,6 +11,8 @@ class Detail {
   $rowDiv = commonJsCreateEl("div");
   $menuContainer = new Menu();
   $listPostContainer = new ListPost();
+  $userInforContainer = new UserInfor();
+  $postsNumber = 0;
 
   constructor() {
     commonJsAddClass(
@@ -23,6 +26,8 @@ class Detail {
     commonJsAddClass(this.$rowDiv, "row");
 
     this.getUserInfo();
+    this.$rowDiv.appendChild(this.$userInforContainer.$containerWrapper);
+    this.$rowDiv.appendChild(this.$listPostContainer.$container);
     this.$contentWrapper.appendChild(this.$rowDiv);
 
     this.$container.appendChild(this.$menuContainer.$container);
@@ -35,27 +40,34 @@ class Detail {
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type == "added") {
-            const userInforContainer = new UserInfor(change.doc.data());
-            this.$rowDiv.appendChild(userInforContainer.$containerWrapper);
-            this.$rowDiv.appendChild(this.$listPostContainer.$container);
-            this.getlistPosts(change.doc.data());
+            const modalEditProfile = new EditProfile(change.doc.data(), change.doc.id);
+            this.$container.appendChild(modalEditProfile.$container);
+            this.$userInforContainer.showEditProfileModal(()=> {
+              modalEditProfile.$modal.showModal(true)
+            });
+            this.$userInforContainer.getInforValue(change.doc.data());
+            this.getlistPosts(change.doc.data().email);
           }
         });
       });
   };
 
-  getlistPosts = (userInfo) => {
+  getlistPosts = (email) => {
     db.collection("posts")
-      .where("email", "==", userInfo.email)
+      .where("email", "==", email)
       .orderBy("createAt")
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type == "added") {
-            const postItem = new PostItem(change.doc.data());
+            this.$postsNumber++;
+            const postItem = new PostItem(change.doc.data(), change.doc.id);
             this.$listPostContainer.$postListContainer.appendChild(
               postItem.$container
             );
+          } else if (change.type == "modified") {
+
           }
+          this.$userInforContainer.getTotalPostNumber(this.$postsNumber);
         });
       });
   };

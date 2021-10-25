@@ -31,8 +31,9 @@ class UserInfor {
   $modalEditProfile;
   $totalPostNumber = 0;
 
-  constructor(userInfor) {
-    this.$modalEditProfile = new EditProfile(userInfor);
+  clickEv = null;
+  constructor(userInfor,userId) {
+    //this.$modalEditProfile = new EditProfile(userInfor,userId);
     commonJsAddClass(
       this.$avatar,
       "avatar",
@@ -85,26 +86,21 @@ class UserInfor {
     commonJsAddClass(this.$followingTextLeft, "text-868686", "me-1");
     commonJsAddClass(this.$followingTextRight, "text-868686");
 
-    this.$userName.innerText = userInfor.displayName;
     this.$btnText.innerText = "Chỉnh sửa trang cá nhân";
     this.$postNumber.innerText = 0;
     this.$postText.innerText = "Bài Viết";
-    this.$followerNumber.innerText =
-      userInfor.followers?.length > 0 ? userInfor.followers?.length : 0;
     this.$followerText.innerText = "người theo dõi";
-    this.$followingNumber.innerText =
-      userInfor.watching?.length > 0 ? userInfor.watching?.length : 0;
     this.$followingTextLeft.innerText = "Đang theo dõi";
     this.$followingTextRight.innerText = "người dùng";
 
     this.$avatar.appendChild(this.$avatarImg);
     this.$avatarContainer.appendChild(this.$avatar);
 
-    userInfor.photoURL ? this.$avatarImg.setAttribute("src", userInfor.photoURL) : "";
-
     this.$editBtn.appendChild(this.$btnText);
     this.$editBtn.appendChild(this.$btnIcon);
-    this.$editBtn.addEventListener("click", this.showEditProfileModal);
+    this.$editBtn.addEventListener("click", () => {
+      this.clickEv();
+    });
 
     this.$nameAndEditContainer.appendChild(this.$userName);
     this.$nameAndEditContainer.appendChild(this.$editBtn);
@@ -129,25 +125,37 @@ class UserInfor {
     this.$container.appendChild(this.$avatarContainer);
     this.$container.appendChild(this.$inforContainer);
     this.$containerWrapper.appendChild(this.$container);
-    this.$containerWrapper.appendChild(this.$modalEditProfile.$container);
-
-    this.getTotalPostNumber(userInfor.email);
+    //this.$containerWrapper.appendChild(this.$modalEditProfile.$container);
   }
 
-  showEditProfileModal = () => {
-    this.$modalEditProfile.showEditProfileModal(true);
-  };
-
-  getTotalPostNumber = (email) => {
-    db.collection("posts")
-      .where("email", "==", email)
-      .onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          this.$totalPostNumber++;
-        });
-        this.$postNumber.innerText = this.$totalPostNumber;
-      });
-  };
+  showEditProfileModal = (listener) => {
+    this.clickEv = listener;
+  }
+  getTotalPostNumber = (numberPosts) => {
+    this.$postNumber.innerText = numberPosts;
+  }
+  getInforValue = (userInfor) => {
+    this.$userName.innerText = userInfor.displayName;
+    this.$followerNumber.innerText =
+      userInfor.followers?.length > 0 ? userInfor.followers?.length : 0;
+    this.$followingNumber.innerText =
+      userInfor.watching?.length > 0 ? userInfor.watching?.length : 0;
+    userInfor.photoURL ? this.$avatarImg.setAttribute("src", userInfor.photoURL) : "";
+  }
+  // getTotalPostNumber = (email) => {
+  //   db.collection("posts")
+  //     .where("email", "==", email)
+  //     .onSnapshot((snapshot) => {
+  //       snapshot.docChanges().forEach((change) => {
+  //         if (change.type == "added") {
+  //           this.$totalPostNumber++;
+  //         } else if (change.type == "modified") {
+  //           this.$totalPostNumber--;
+  //         }
+  //       });
+  //       this.$postNumber.innerText = this.$totalPostNumber;
+  //     });
+  // };
 }
 
 export { UserInfor };
