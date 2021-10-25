@@ -10,6 +10,7 @@ class PostItem {
     commonJsAddClass(this.$container, "col", "col-md-4", "mt-4");
     commonJsAddClass(
       this.$postImage,
+      "cursor-pointer",
       "ratio",
       "ratio-1x1",
       "bg-secondary",
@@ -26,7 +27,8 @@ class PostItem {
       "position-absolute",
       "cursor-pointer",
       "bg-secondary",
-      "rounded"
+      "rounded",
+      "d-none"
     );
     commonJsAddClass(
       this.$removePostIcon,

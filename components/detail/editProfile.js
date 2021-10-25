@@ -204,7 +204,7 @@ class EditProfile {
     const userDes = this.$describeInput.value;
 
     db.collection("users")
-      .doc(this.$userEmail)
+      .doc("QkIB4jFDBZDGviwWthnW")
       .update({
         displayName: userName,
         description: userDes,

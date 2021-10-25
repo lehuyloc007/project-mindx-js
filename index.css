@@ -234,3 +234,7 @@ a {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.bg-image:hover .icon-delete-post-container {
+    display: block !important;
+}
