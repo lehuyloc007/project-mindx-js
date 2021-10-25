@@ -1,5 +1,4 @@
 import { commonJsAddClass, commonJsCreateEl } from "../shared/common.js";
-import { PostItem } from "./postItem.js";
 
 class ListPost {
   $container = commonJsCreateEl("div");

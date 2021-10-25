@@ -5,6 +5,7 @@ class UserInfor {
   $containerWrapper = commonJsCreateEl("div");
   $container = commonJsCreateEl("div");
   $avatarContainer = commonJsCreateEl("div");
+  $avatarImg = commonJsCreateEl("img");
   $avatar = commonJsCreateEl("div");
   $inforContainer = commonJsCreateEl("div");
   $nameAndEditWrapper = commonJsCreateEl("div");
@@ -37,8 +38,10 @@ class UserInfor {
       "avatar",
       "rounded-circle",
       "bg-secondary",
-      "mx-auto"
+      "mx-auto",
+      "overflow-hidden"
     );
+    commonJsAddClass(this.$avatarImg, "w-100");
     commonJsAddClass(this.$avatarContainer, "col-md-3");
     commonJsAddClass(
       this.$nameAndEditContainer,
@@ -94,7 +97,10 @@ class UserInfor {
     this.$followingTextLeft.innerText = "Đang theo dõi";
     this.$followingTextRight.innerText = "người dùng";
 
+    this.$avatar.appendChild(this.$avatarImg);
     this.$avatarContainer.appendChild(this.$avatar);
+
+    userInfor.photoURL ? this.$avatarImg.setAttribute("src", userInfor.photoURL) : "";
 
     this.$editBtn.appendChild(this.$btnText);
     this.$editBtn.appendChild(this.$btnIcon);
@@ -132,10 +138,6 @@ class UserInfor {
     this.$modalEditProfile.showEditProfileModal(true);
   };
 
-  getTotalPostNumber = (number) => {
-    this.$postNumber.innerText = number;
-  };
-
   getTotalPostNumber = (email) => {
     db.collection("posts")
       .where("email", "==", email)
@@ -143,7 +145,6 @@ class UserInfor {
         snapshot.docChanges().forEach((change) => {
           this.$totalPostNumber++;
         });
-        console.log(this.$totalPostNumber);
         this.$postNumber.innerText = this.$totalPostNumber;
       });
   };
