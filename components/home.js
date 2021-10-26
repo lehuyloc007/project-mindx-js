@@ -25,7 +25,7 @@ class Home {
         this.$rowContentContainer.appendChild(this.$colRightContentContainer);
 
         //left
-        commonJsAddClass(this.$colLeftContentContainer, "col", "col-sm-7", "col-md-6", "offset-md-1");
+        commonJsAddClass(this.$colLeftContentContainer, "col-12", "col-md-6", "offset-md-1");
         this.$colLeftContentContainer.appendChild(this.$listPostsContainer);
         commonJsAddClass(this.$btnLoadMorePostsContainer, "d-flex", "d-none");
         commonJsAddClass(this.$btnLoadMorePosts, "btn", "btn-outline-secondary", "my-5", "mx-auto");
@@ -36,7 +36,7 @@ class Home {
         
 
         //right
-        commonJsAddClass(this.$colRightContentContainer, "col", "col-sm-5", "col-md-4");
+        commonJsAddClass(this.$colRightContentContainer, "col-12", "col-md-4");
         this.$colRightContentContainer.appendChild(this.$listWatchings.$container);
     }
 
