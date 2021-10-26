@@ -8,7 +8,7 @@ class SearchResultItem {
   $userdescription = commonJsCreateEl("div");
   $followBtn = commonJsCreateEl("div");
 
-  constructor() {
+  constructor(userInfor) {
     commonJsAddClass(
       this.$container,
       "p-3",
@@ -17,16 +17,16 @@ class SearchResultItem {
       "align-items-center",
       "border-bottom"
     );
-    commonJsAddClass(this.$avatar, "rounded-circle", "me-2");
+    commonJsAddClass(this.$avatar, "rounded-circle", "me-2", "col-2");
     commonJsAddClass(this.$nameComtainer, "ms-1", "me-auto");
     commonJsAddClass(this.$username, "h5");
-    commonJsAddClass(this.$userdescription, "h6", "text-secondary");
+    commonJsAddClass(this.$userdescription, "h6", "text-secondary", "mt-2");
     commonJsAddClass(this.$followBtn, "btn", "btn-sm", "btn-outline-secondary");
 
-    this.$username.innerText = "Minh Hiếu";
-    this.$userdescription.innerText = "Be Patient";
+    this.$username.innerText = userInfor.displayName;
+    this.$userdescription.innerText = userInfor.description;
     this.$followBtn.innerText = "Theo dõi";
-    this.$avatar.setAttribute("src", "components/imgs/111.jpg");
+    this.$avatar.setAttribute("src", userInfor.photoURL);
 
     this.$container.appendChild(this.$avatar);
     this.$nameComtainer.appendChild(this.$username);

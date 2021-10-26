@@ -1,22 +1,18 @@
 import { commonJsAddClass, commonJsCreateEl } from "./shared/common.js";
-import { Menu } from "./shared/menu.js";
 import { SearchResultItem } from "./search/searchResultItem.js";
 
 class Search {
   $container = commonJsCreateEl("div");
-  $menuContainer = new Menu();
-  $contentWrapper = commonJsCreateEl("div");
   $rowDiv = commonJsCreateEl("div");
   $searchResultContainer = commonJsCreateEl("div");
   $keywordContainer = commonJsCreateEl("div");
   $title = commonJsCreateEl("span");
   $keyword = commonJsCreateEl("span");
   $listResultContainer = commonJsCreateEl("div");
-  $SearchResultItem = new SearchResultItem();
 
   constructor() {
     commonJsAddClass(
-      this.$contentWrapper,
+      this.$container,
       "container",
       "mt-5",
       "pt-3",
@@ -25,7 +21,7 @@ class Search {
     commonJsAddClass(this.$rowDiv, "row");
     commonJsAddClass(
       this.$searchResultContainer,
-      "col",
+      "col-12",
       "col-md-6",
       "offset-md-1"
     );
@@ -39,13 +35,23 @@ class Search {
     this.$keywordContainer.appendChild(this.$title);
     this.$keywordContainer.appendChild(this.$keyword);
     this.$searchResultContainer.appendChild(this.$keywordContainer);
-    this.$listResultContainer.appendChild(this.$SearchResultItem.$container);
     this.$searchResultContainer.appendChild(this.$listResultContainer);
     this.$rowDiv.appendChild(this.$searchResultContainer);
-    this.$contentWrapper.appendChild(this.$rowDiv);
 
-    this.$container.appendChild(this.$menuContainer.$container);
-    this.$container.appendChild(this.$contentWrapper);
+    this.$container.appendChild(this.$rowDiv);
+  }
+
+  setKeyword = (keyword) => {
+    console.log(keyword);
+    db.collection("users")
+      .where("displayName", "==", keyword)
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          console.log(change.doc.data());
+          const searchResultItem = new SearchResultItem(change.doc.data());
+          this.$listResultContainer.appendChild(searchResultItem.$container);
+        });
+      });
   }
 }
 
