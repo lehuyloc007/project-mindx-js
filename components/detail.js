@@ -40,13 +40,19 @@ class Detail {
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type == "added") {
-            const modalEditProfile = new EditProfile(change.doc.data(), change.doc.id);
+            const modalEditProfile = new EditProfile(
+              change.doc.data(),
+              change.doc.id
+            );
             this.$container.appendChild(modalEditProfile.$container);
-            this.$userInforContainer.showEditProfileModal(()=> {
-              modalEditProfile.$modal.showModal(true)
+            this.$userInforContainer.showEditProfileModal(() => {
+              modalEditProfile.$modal.showModal(true);
             });
             this.$userInforContainer.getInforValue(change.doc.data());
             this.getlistPosts(change.doc.data().email);
+          } else if (change.type == "modified") {
+            this.$userInforContainer.$userName.innerText =
+              change.doc.data().displayName;
           }
         });
       });
@@ -64,11 +70,11 @@ class Detail {
             this.$listPostContainer.$postListContainer.appendChild(
               postItem.$container
             );
-          } else if (change.type == "modified") {
-
+          } else if (change.type == "removed") {
+            this.$postsNumber--;
           }
-          this.$userInforContainer.getTotalPostNumber(this.$postsNumber);
         });
+        this.$userInforContainer.getTotalPostNumber(this.$postsNumber);
       });
   };
 }

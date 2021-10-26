@@ -32,8 +32,7 @@ class UserInfor {
   $totalPostNumber = 0;
 
   clickEv = null;
-  constructor(userInfor,userId) {
-    //this.$modalEditProfile = new EditProfile(userInfor,userId);
+  constructor() {
     commonJsAddClass(
       this.$avatar,
       "avatar",
@@ -125,37 +124,24 @@ class UserInfor {
     this.$container.appendChild(this.$avatarContainer);
     this.$container.appendChild(this.$inforContainer);
     this.$containerWrapper.appendChild(this.$container);
-    //this.$containerWrapper.appendChild(this.$modalEditProfile.$container);
   }
 
   showEditProfileModal = (listener) => {
     this.clickEv = listener;
-  }
+  };
   getTotalPostNumber = (numberPosts) => {
     this.$postNumber.innerText = numberPosts;
-  }
+  };
   getInforValue = (userInfor) => {
     this.$userName.innerText = userInfor.displayName;
     this.$followerNumber.innerText =
       userInfor.followers?.length > 0 ? userInfor.followers?.length : 0;
     this.$followingNumber.innerText =
       userInfor.watching?.length > 0 ? userInfor.watching?.length : 0;
-    userInfor.photoURL ? this.$avatarImg.setAttribute("src", userInfor.photoURL) : "";
-  }
-  // getTotalPostNumber = (email) => {
-  //   db.collection("posts")
-  //     .where("email", "==", email)
-  //     .onSnapshot((snapshot) => {
-  //       snapshot.docChanges().forEach((change) => {
-  //         if (change.type == "added") {
-  //           this.$totalPostNumber++;
-  //         } else if (change.type == "modified") {
-  //           this.$totalPostNumber--;
-  //         }
-  //       });
-  //       this.$postNumber.innerText = this.$totalPostNumber;
-  //     });
-  // };
+    userInfor.photoURL
+      ? this.$avatarImg.setAttribute("src", userInfor.photoURL)
+      : "";
+  };
 }
 
 export { UserInfor };
