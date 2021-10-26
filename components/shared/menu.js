@@ -21,6 +21,7 @@ class Menu {
     $menuItemBtnLogoutContainer = new MenuList("btn-logout", "Đăng xuất");
     $modalCreatePosts = new CreatePosts();
 
+    ClickHomeMenu = null;
     constructor() {
         //left
         this.$txtLogo.innerHTML = "Social";
@@ -74,6 +75,9 @@ class Menu {
             this.$modalCreatePosts.innerHTML = "";
             this.$modalCreatePosts.showModalCreatePost(true);
         });
+    }
+    setMenuHomeClick = (listener) => {
+        this.$menuItemBtnHomeContainer.setOnMenuClick(listener);
     }
     setBackgroungIconUserActive = (imgUser) => {
         this.$menuItemBtnUserContainer.setBackgroungIconUser(imgUser);

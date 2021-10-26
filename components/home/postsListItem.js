@@ -119,6 +119,7 @@ class PostsListItem {
         })
         .then(() => {
             this.$likeCountNumber.innerHTML = dataItemPosts.likes.length + " lượt thích";
+            commonJsAddClass(this.$likeCount, "like-count-red");
         })
         .catch((error) => {
             console.log(error);
