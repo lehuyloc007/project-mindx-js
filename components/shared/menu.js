@@ -25,7 +25,7 @@ class Menu {
     constructor() {
         //left
         this.$txtLogo.innerHTML = "Social";
-        commonJsAddClass(this.$txtLogo, "navbar-brand", "fst-italic", "fw-bold");
+        commonJsAddClass(this.$txtLogo, "navbar-brand", "fst-italic", "fw-bold", "cursor-pointer");
 
         this.$btnMenu.type = "button";
         this.$btnMenu.setAttribute("data-bs-toggle", "collapse");
@@ -37,7 +37,7 @@ class Menu {
 
         //right
         commonJsAddClass(this.$menuSearchBox, "input-group", "input-group-sm");
-        commonJsAddClass(this.$menuSearchInputSearch, "form-control");
+        commonJsAddClass(this.$menuSearchInputSearch, "form-control", "bg-light");
         this.$menuSearchInputSearch.placeholder = "Nhập từ khóa...";
         this.$menuSearchInputSearch.type = "text";
         commonJsAddClass(this.$menuBtnInputSearch, "btn", "btn-outline-secondary");
@@ -76,8 +76,14 @@ class Menu {
             this.$modalCreatePosts.showModalCreatePost(true);
         });
     }
+    setOnMenuLogoClick = (listener) => {
+        this.$txtLogo.onclick = listener;
+    }
     setMenuHomeClick = (listener) => {
         this.$menuItemBtnHomeContainer.setOnMenuClick(listener);
+    }
+    setMenuDetailClick = (listener) => {
+        this.$menuItemBtnUserContainer.setOnMenuClick(listener);
     }
     setBackgroungIconUserActive = (imgUser) => {
         this.$menuItemBtnUserContainer.setBackgroungIconUser(imgUser);

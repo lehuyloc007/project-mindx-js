@@ -10,7 +10,7 @@ class ListPost {
   $postListContainer = commonJsCreateEl("div");
 
   constructor() {
-    commonJsAddClass(this.$postTitleWrapper, "border-bottom", "mt-3", "pb-1");
+    commonJsAddClass(this.$postTitleWrapper, "border-bottom", "mt-3", "pb-2");
     commonJsAddClass(
       this.$postTitleContainer,
       "d-flex",
@@ -19,7 +19,7 @@ class ListPost {
     );
     commonJsAddClass(this.$postTitleIcon, "icon-list-posts", "me-1");
     commonJsAddClass(this.$postTitleText, "h5", "mb-0");
-    commonJsAddClass(this.$postListWrapper, "pt-4", "pb-3", "bg-ececec");
+    commonJsAddClass(this.$postListWrapper, "pt-4", "pb-3");
     commonJsAddClass(
       this.$postListContainer,
       "list-posts",
