@@ -133,6 +133,9 @@ class UserInfor {
       ? this.$avatarImg.setAttribute("src", userInfor.photoURL)
       : "";
   };
+  setNumberWatchings = (userInfor) => {
+    this.$followingNumber.innerText = userInfor.watchings.length;
+  }
 }
 
 export { UserInfor };

@@ -58,6 +58,9 @@ class Detail {
         this.$userInforContainer.getTotalPostNumber(this.$postsNumber);
       });
   };
+  setNumberWatchingsUpdated = (userInfor) => {
+    this.$userInforContainer.setNumberWatchings(userInfor);
+  }
 }
 
 export { Detail };
