@@ -50,11 +50,7 @@ class WatchingsList {
                     }
                 });
             })
-
         }
-    }
-    clearw = () => {
-        this.$container.innerHTML = "";
     }
 }
 export { WatchingsList }

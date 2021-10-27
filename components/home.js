@@ -69,6 +69,5 @@ class Home {
             this.lastestDoc = snapshot.docs[snapshot.docs.length-1];
         });
     }
-
 }
 export { Home }

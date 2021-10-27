@@ -77,9 +77,6 @@ class UserInfor {
     commonJsAddClass(this.$postNumberContainer, "me-4");
     commonJsAddClass(this.$postNumber, "h3", "me-1");
     commonJsAddClass(this.$postText, "text-868686");
-    commonJsAddClass(this.$followerContainer, "me-4");
-    commonJsAddClass(this.$followerNumber, "h3", "me-1");
-    commonJsAddClass(this.$followerText, "text-868686");
     commonJsAddClass(this.$followingContainer, "me-4");
     commonJsAddClass(this.$followingNumber, "h3", "me-1");
     commonJsAddClass(this.$followingTextLeft, "text-868686", "me-1");
@@ -88,7 +85,6 @@ class UserInfor {
     this.$btnText.innerText = "Chỉnh sửa trang cá nhân";
     this.$postNumber.innerText = 0;
     this.$postText.innerText = "Bài Viết";
-    this.$followerText.innerText = "người theo dõi";
     this.$followingTextLeft.innerText = "Đang theo dõi";
     this.$followingTextRight.innerText = "người dùng";
 
@@ -108,10 +104,6 @@ class UserInfor {
     this.$postNumberContainer.appendChild(this.$postNumber);
     this.$postNumberContainer.appendChild(this.$postText);
     this.$communicateContainer.appendChild(this.$postNumberContainer);
-
-    this.$followerContainer.appendChild(this.$followerNumber);
-    this.$followerContainer.appendChild(this.$followerText);
-    this.$communicateContainer.appendChild(this.$followerContainer);
 
     this.$followingContainer.appendChild(this.$followingTextLeft);
     this.$followingContainer.appendChild(this.$followingNumber);
@@ -133,11 +125,10 @@ class UserInfor {
     this.$postNumber.innerText = numberPosts;
   };
   getInforValue = (userInfor) => {
+    console.log(userInfor.watchings);
     this.$userName.innerText = userInfor.displayName;
-    this.$followerNumber.innerText =
-      userInfor.followers?.length > 0 ? userInfor.followers?.length : 0;
     this.$followingNumber.innerText =
-      userInfor.watching?.length > 0 ? userInfor.watching?.length : 0;
+      userInfor.watchings?.length > 0 ? userInfor.watchings?.length : 0;
     userInfor.photoURL
       ? this.$avatarImg.setAttribute("src", userInfor.photoURL)
       : "";

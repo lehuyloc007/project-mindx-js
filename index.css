@@ -25,6 +25,10 @@ a {
 .cursor-pointer {
     cursor: pointer;
 }
+.navbar .form-control:focus,
+.navbar .btn-outline-secondary:focus {
+    box-shadow: none;
+}
 .btn-home span:first-child {
     background: url('components/imgs/home-icon.svg');
 }

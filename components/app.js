@@ -15,19 +15,22 @@ class App {
   $detailContainer = new Detail();
   $searchContainer = new Search();
 
+  valueSearch = null
+
   constructor() {
     commonJsAddClass(this.$container, "bg-light");
     this.$container.appendChild(this.$menuContainer.$container);
     this.$container.appendChild(this.$contentContainer);
-    this.getUserInfo();
+    
     this.$menuContainer.setMenuHomeClick(() => {
       this.$contentContainer.innerHTML = "";
       this.$contentContainer.appendChild(this.$homeContainer.$container);
     });
     this.$menuContainer.setOnSearchSubmit((keyword) => {
       this.$contentContainer.innerHTML = "";
+      this.$searchContainer.setDisplayResultRemove();
       this.$contentContainer.appendChild(this.$searchContainer.$container);
-      this.$searchContainer.setKeyword(keyword);
+      this.getDataSearch(keyword);
     });
     this.$menuContainer.setOnMenuLogoClick(() => {
       this.$contentContainer.innerHTML = "";
@@ -42,31 +45,45 @@ class App {
       this.$contentContainer.appendChild(this.$detailContainer.$container);
     });
     this.$contentContainer.appendChild(this.$homeContainer.$container);
+    this.getUserInfo();
   }
 
   getUserInfo = () => {
     db.collection("users")
-      .where("email", "==", firebase.auth().currentUser.email)
-      .onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type == "added") {
-            this.$menuContainer.setBackgroungIconUserActive(
-              change.doc.data().photoURL
-            );
-            this.$homeContainer.setCurrentUserActive(
-              change.doc.data(),
-              change.doc.id
-            );
-            this.$detailContainer.setCurrentUserInfo(
-              change.doc.data(),
-              change.doc.id
-            );
-          }
-          if (change.type == "modified") {
-            this.$detailContainer.setCurrentUserInfoUpdate(change.doc.data());
-          }
-        });
+    .where("email", "==", firebase.auth().currentUser.email)
+    .onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type == "added") {
+          this.$menuContainer.setBackgroungIconUserActive(
+            change.doc.data().photoURL
+          );
+          this.$homeContainer.setCurrentUserActive(
+            change.doc.data(),
+            change.doc.id
+          );
+          this.$detailContainer.setCurrentUserInfo(
+            change.doc.data(),
+            change.doc.id
+          );
+          this.$searchContainer.setCurrentUserInfo(change.doc.data(), change.doc.id);
+        }
+        if (change.type == "modified") {
+          this.$detailContainer.setCurrentUserInfoUpdate(change.doc.data());
+        }
       });
+    });
   };
+  getDataSearch = (keyword) => {
+    this.$searchContainer.setKeyword(keyword);
+    db.collection("users")
+    .where('displayName', '>=', keyword).where('displayName', '<=', keyword + '\uf8ff')
+    .onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if(change.type == "added"){
+          this.$searchContainer.setDisplayResult(change.doc.data())
+        }
+      });
+    });
+  }
 }
 export { App };

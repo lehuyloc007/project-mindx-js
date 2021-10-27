@@ -6,34 +6,53 @@ class SearchResultItem {
   $nameComtainer = commonJsCreateEl("div");
   $username = commonJsCreateEl("div");
   $userdescription = commonJsCreateEl("div");
-  $followBtn = commonJsCreateEl("div");
+  $btnWatching = commonJsCreateEl("div");
 
-  constructor(userInfor) {
-    commonJsAddClass(
-      this.$container,
-      "p-3",
-      "rounded-3",
-      "d-flex",
-      "align-items-center",
-      "border-bottom"
-    );
+  emailUserItem = null;
+  currentUserInfo = null;
+  currentUserId = null;
+  constructor(userItem) {
+    this.emailUserItem = userItem.email;
+    commonJsAddClass(this.$container,"p-3","rounded-3","d-flex","align-items-center","border-bottom");
     commonJsAddClass(this.$avatar, "rounded-circle", "me-2", "col-2");
     commonJsAddClass(this.$nameComtainer, "ms-1", "me-auto");
     commonJsAddClass(this.$username, "h5");
     commonJsAddClass(this.$userdescription, "h6", "text-secondary", "mt-2");
-    commonJsAddClass(this.$followBtn, "btn", "btn-sm", "btn-outline-secondary");
+    commonJsAddClass(this.$btnWatching, "btn", "btn-sm", "btn-outline-secondary");
 
-    this.$username.innerText = userInfor.displayName;
-    this.$userdescription.innerText = userInfor.description;
-    this.$followBtn.innerText = "Theo dõi";
-    this.$avatar.setAttribute("src", userInfor.photoURL);
+    this.$username.innerText = userItem.displayName;
+    this.$userdescription.innerText = userItem.description;
+    this.$btnWatching.innerText = "Theo dõi";
+    this.$btnWatching.addEventListener("click", this.handelWatching);
+    this.$avatar.setAttribute("src", userItem.photoURL);
 
     this.$container.appendChild(this.$avatar);
     this.$nameComtainer.appendChild(this.$username);
     this.$nameComtainer.appendChild(this.$userdescription);
     this.$container.appendChild(this.$nameComtainer);
-    this.$container.appendChild(this.$followBtn);
   }
+  setActiveBtnWatchings = () => {
+    this.$container.appendChild(this.$btnWatching);
+  }
+  setCurrentUserInfo = (user, idUser) => {
+    this.currentUserInfo = user;
+    this.currentUserId = idUser;
+  }
+  handelWatching = () => {
+    this.currentUserInfo.watchings.splice(1, 0, this.emailUserItem);
+    db.collection("users")
+    .doc(this.currentUserId)
+    .update({
+      watchings: this.currentUserInfo.watchings
+    })
+    .then(() => {
+      commonJsAddClass(this.$btnWatching, "d-none");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
 }
 
 export { SearchResultItem };

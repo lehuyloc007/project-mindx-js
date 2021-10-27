@@ -51,7 +51,6 @@ class Menu {
     this.$menuSearchInputSearch.type = "text";
     commonJsAddClass(this.$menuBtnInputSearch, "btn", "btn-outline-secondary");
     this.$menuBtnInputSearch.innerHTML = "Tìm kiếm";
-    this.$menuBtnInputSearch.type = "button";
     this.$menuSearchBox.appendChild(this.$menuSearchInputSearch);
     this.$menuSearchBox.appendChild(this.$menuBtnInputSearch);
     commonJsAddClass(this.$menuItemSearchContainer, "nav-item");

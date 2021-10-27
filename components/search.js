@@ -10,6 +10,8 @@ class Search {
   $keyword = commonJsCreateEl("span");
   $listResultContainer = commonJsCreateEl("div");
 
+  currentUserInfo = null;
+  currentUserId = null;
   constructor() {
     commonJsAddClass(
       this.$container,
@@ -30,28 +32,32 @@ class Search {
     commonJsAddClass(this.$listResultContainer, "list-search");
 
     this.$title.innerText = "Kết quả tìm kiếm: ";
-    this.$keyword.innerText = "Minh Hiếu";
 
     this.$keywordContainer.appendChild(this.$title);
     this.$keywordContainer.appendChild(this.$keyword);
     this.$searchResultContainer.appendChild(this.$keywordContainer);
     this.$searchResultContainer.appendChild(this.$listResultContainer);
     this.$rowDiv.appendChild(this.$searchResultContainer);
-
     this.$container.appendChild(this.$rowDiv);
   }
-
+  setCurrentUserInfo = (user, idUser) => {
+    this.currentUserInfo = user;
+    this.currentUserId = idUser;
+  }
   setKeyword = (keyword) => {
-    console.log(keyword);
-    db.collection("users")
-      .where("displayName", "==", keyword)
-      .onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          console.log(change.doc.data());
-          const searchResultItem = new SearchResultItem(change.doc.data());
-          this.$listResultContainer.appendChild(searchResultItem.$container);
-        });
-      });
+    this.$keyword.innerText = keyword;
+  }
+  setDisplayResult = (dataResult) => {
+    const searchResultItem = new SearchResultItem(dataResult);
+    const indexEl = this.currentUserInfo.watchings.indexOf(dataResult.email);
+    if (indexEl == -1) {
+      searchResultItem.setActiveBtnWatchings();
+      searchResultItem.setCurrentUserInfo(this.currentUserInfo, this.currentUserId)
+    }
+    this.$listResultContainer.appendChild(searchResultItem.$container);
+  }
+  setDisplayResultRemove = () => {
+    this.$listResultContainer.innerHTML = "";
   }
 }
 

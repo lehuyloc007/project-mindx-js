@@ -35,7 +35,7 @@ class Detail {
     this.$userInforContainer.getInforValue(user);
     this.getlistPosts(user.email);
   };
-  setCurrentUserInfoUpdate = () =>{
+  setCurrentUserInfoUpdate = (user) =>{
     this.$userInforContainer.$userName.innerText = user.displayName;
   };
 
