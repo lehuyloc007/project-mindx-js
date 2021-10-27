@@ -125,7 +125,6 @@ class UserInfor {
     this.$postNumber.innerText = numberPosts;
   };
   getInforValue = (userInfor) => {
-    console.log(userInfor.watchings);
     this.$userName.innerText = userInfor.displayName;
     this.$followingNumber.innerText =
       userInfor.watchings?.length > 0 ? userInfor.watchings?.length : 0;

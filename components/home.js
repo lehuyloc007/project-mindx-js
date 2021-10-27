@@ -60,13 +60,25 @@ class Home {
             lstdataPosts =  lstdataPosts.startAfter(this.lastestDoc)
         } 
         lstdataPosts.onSnapshot((snapshot) => {
+            var checkLocal = snapshot.metadata.hasPendingWrites ? true : false;
+            console.log(snapshot.docs)
+            
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                    this.$listPostsContainer.appendChild($postsList.$container);
+                    if(checkLocal) {
+                        const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
+                        this.$listPostsContainer.prepend($postsList.$container);
+                    } else {
+                        const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
+                        this.$listPostsContainer.appendChild($postsList.$container);
+                        this.lastestDoc = snapshot.docs[snapshot.docs.length-1]; 
+                    }
+                    
                 }
             });
-            this.lastestDoc = snapshot.docs[snapshot.docs.length-1];
+              
+            
+            
         });
     }
 }
