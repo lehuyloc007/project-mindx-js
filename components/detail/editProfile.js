@@ -135,7 +135,7 @@ class EditProfile {
     );
     this.$avatarEditIcon.addEventListener("change", this.handleEditAvatar);
 
-    this.$modal.setHeader("Chỉnh sửa trang cá nhân");
+    this.$modal.setHeader("Chỉnh sửa thông tin cá nhân");
     this.$modal.setOnConfirmClick("Cập nhật", this.handleUpdateInfor);
     this.$modal.setBody(this.$bodyModalContainer);
 

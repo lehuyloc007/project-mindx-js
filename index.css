@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 a {
     text-decoration: none;
@@ -20,7 +20,7 @@ a {
     line-height: 1.2;
 }
 .bg-FBFAFA {
-    background: #FBFAFA;
+    background: #fbfafa;
 }
 .cursor-pointer {
     cursor: pointer;
@@ -30,13 +30,13 @@ a {
     box-shadow: none;
 }
 .btn-home span:first-child {
-    background: url('components/imgs/home-icon.svg');
+    background: url("components/imgs/home-icon.svg");
 }
 .btn-create-post span:first-child {
-    background: url('components/imgs/add-post.svg');
+    background: url("components/imgs/add-post.svg");
 }
 .btn-logout span:first-child {
-    background: url('components/imgs/logout.svg');
+    background: url("components/imgs/logout.svg");
 }
 .nav-item span {
     font-size: 0.9rem;
@@ -57,14 +57,14 @@ a {
     height: 40vh;
 }
 .like-count span:first-child {
-    background: url('components/imgs/icon-like.svg') no-repeat;
+    background: url("components/imgs/icon-like.svg") no-repeat;
     background-size: 18px;
     width: 18px;
     height: 18px;
     display: inline-block;
 }
 .like-count.like-count-red span:first-child {
-    background: url('components/imgs/icon-like-red.svg') no-repeat;
+    background: url("components/imgs/icon-like-red.svg") no-repeat;
     background-size: 18px;
 }
 
@@ -73,28 +73,26 @@ a {
     height: 40px;
 }
 .icon-del-friend {
-    background: url('components/imgs/icon-del-friend.svg');
+    background: url("components/imgs/icon-del-friend.svg");
     background-size: 18px;
     width: 18px;
     height: 18px;
     display: inline-block;
     background-repeat: no-repeat;
 }
-.list-search img{
+.list-search img {
     width: 60px;
     height: 60px;
-    
 }
 
-.create-post-body-info-user img{
+.create-post-body-info-user img {
     width: 40px;
     height: 40px;
 }
 
-
 .post-content:before {
     content: attr(placeholder);
-    position:absolute;
+    position: absolute;
     display: inline-block;
 }
 .post-content div[contenteditable] {
@@ -108,7 +106,6 @@ a {
 .post-content div:focus-visible {
     outline: 0;
 }
-
 
 .icon-smile {
     background: url("components/imgs/icon-smile.svg") no-repeat;
@@ -140,68 +137,66 @@ a {
     padding: 10px;
 }
 
-.edit-profile-body img{
+.edit-profile-body img {
     width: 80px;
     height: 80px;
-   
 }
 
-.icon-pencil{
-    background: url("components/imgs/icon-pencil.svg") no-repeat ;
+.icon-pencil {
+    background: url("components/imgs/icon-pencil.svg") no-repeat;
     width: 30px;
     height: 30px;
     background-size: 20px;
     top: 37%;
     left: 48%;
-   
 }
 
 /* detai page CSS */
 .avatar {
     width: 10rem;
     height: 10rem;
-  }
-  .icon-setting {
-    background: url('components/imgs/icon-setting.svg');
+}
+.icon-setting {
+    background: url("components/imgs/icon-setting.svg");
     background-size: cover;
     background-position: center;
     width: 1.1rem;
     height: 1.1rem;
-  }
-  .icon-list-posts {
-    background: url('components/imgs/icon-list-posts.svg');
+}
+.icon-list-posts {
+    background: url("components/imgs/icon-list-posts.svg");
     background-size: cover;
     background-position: center;
     width: 1.1rem;
     height: 1.1rem;
-  }
-  .icon-delete-post-container {
-      width:auto;
-      height:auto;
-  }
-  .icon-delete-post {
-    background: url('components/imgs/icon-delete-post.svg');
+}
+.icon-delete-post-container {
+    width: auto;
+    height: auto;
+}
+.icon-delete-post {
+    background: url("components/imgs/icon-delete-post.svg");
     background-size: cover;
     background-position: center;
     width: 1.1rem;
     height: 1.1rem;
-  }
-  .text-494949 {
+}
+.text-494949 {
     color: #494949;
-  }
-  .text-868686 {
+}
+.text-868686 {
     color: #868686;
-  }
-  .bg-ececec {
+}
+.bg-ececec {
     background-color: #ececec;
-  }
-  .right-0 {
-    right: 0!important;
-  }
-  .ratio>* {
+}
+.right-0 {
+    right: 0 !important;
+}
+.ratio > * {
     left: unset !important;
-  }
-  .icon-pencil {
+}
+.icon-pencil {
     background-image: url("components/imgs/icon-pencil.svg");
     background-size: cover;
     background-position: center;
@@ -223,10 +218,10 @@ a {
     bottom: 0;
     left: 63%;
     transform: translate(-50%, -50%);
-    background-color:lightblue;
+    background-color: lightblue;
 }
 .icon-edit-container:hover {
-    background-color:rgb(247, 235, 66);
+    background-color: rgb(247, 235, 66);
 }
 .icon-pencil input {
     width: 0;
@@ -251,4 +246,21 @@ a {
     right: -5%;
     width: auto;
     height: auto;
+}
+.post-container:hover .post-title-container {
+    display: block !important;
+}
+.post-title-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+.b-0 {
+    bottom: 0;
+}
+.l-0 {
+    left: 0;
 }

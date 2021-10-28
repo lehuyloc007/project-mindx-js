@@ -3,6 +3,9 @@ import { commonJsAddClass, commonJsCreateEl, commonJsRemoveClass } from "../shar
 class PostItem {
   $container = commonJsCreateEl("div");
   $postImage = commonJsCreateEl("div");
+  $postTitleContainer = commonJsCreateEl("div");
+  $relativeContainer = commonJsCreateEl("div");
+  $postTitle = commonJsCreateEl("div");
   $removePostIconContainer = commonJsCreateEl("div");
   $removePostIcon = commonJsCreateEl("div");
   $confirmDeleteContainer = commonJsCreateEl("div");
@@ -15,6 +18,7 @@ class PostItem {
     commonJsAddClass(this.$container, "col", "col-md-4", "mt-4");
     commonJsAddClass(
       this.$postImage,
+      "post-container",
       "cursor-pointer",
       "ratio",
       "ratio-1x1",
@@ -34,6 +38,28 @@ class PostItem {
       "bg-secondary",
       "rounded",
       "d-none"
+    );
+    commonJsAddClass(
+      this.$postTitleContainer,
+      "post-title-container",
+      "position-absolute",
+      "rounded"
+    );
+    commonJsAddClass(
+      this.$postTitleContainer,
+      "post-relative",
+      "w-100",
+      "h-100",
+      "rounded"
+    );
+    commonJsAddClass(
+      this.$postTitle,
+      "position-absolute",
+      "ms-2",
+      "mb-2",
+      "l-0",
+      "b-0",
+      "text-white"
     );
     commonJsAddClass(
       this.$removePostIcon,
@@ -75,16 +101,19 @@ class PostItem {
     });
     this.$acceptBtn.addEventListener("click", this.handleDeletePost);
 
+    this.$postTitle.innerHTML = postData.detail;
     this.$postImage.style.backgroundImage = postData?.images[0]
       ? "url(" + postData.images[0] + ")"
       : "";
 
+    this.$postTitleContainer.appendChild(this.$postTitle);
     this.$confirmDeleteContainer.appendChild(this.$refuseBtn);
     this.$confirmDeleteContainer.appendChild(this.$acceptBtn);
     this.$removePostIcon.addEventListener("click", () => {
       commonJsRemoveClass(this.$confirmDeleteContainer, "d-none");
     });
     this.$removePostIconContainer.appendChild(this.$removePostIcon);
+    this.$postImage.appendChild(this.$postTitleContainer);
     this.$postImage.appendChild(this.$confirmDeleteContainer);
     this.$postImage.appendChild(this.$removePostIconContainer);
     this.$container.appendChild(this.$postImage);

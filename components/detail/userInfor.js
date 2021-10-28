@@ -82,7 +82,7 @@ class UserInfor {
     commonJsAddClass(this.$followingTextLeft, "text-868686", "me-1");
     commonJsAddClass(this.$followingTextRight, "text-868686");
 
-    this.$btnText.innerText = "Chỉnh sửa trang cá nhân";
+    this.$btnText.innerText = "Chỉnh sửa thông tin cá nhân";
     this.$postNumber.innerText = 0;
     this.$postText.innerText = "Bài Viết";
     this.$followingTextLeft.innerText = "Đang theo dõi";
