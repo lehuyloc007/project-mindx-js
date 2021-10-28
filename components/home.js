@@ -1,14 +1,13 @@
 import { commonJsAddClass, commonJsCreateEl, commonJsRemoveClass } from "./shared/common.js";
-
-import { PostsListItem } from "./home/postsListItem.js";
 import { WatchingsList } from "./home/watchingsList.js";
+import { PostsList } from "./home/postsList.js";
 
 class Home {
     
     $container = commonJsCreateEl("div");
     $rowContentContainer = commonJsCreateEl("div");
     $colLeftContentContainer = commonJsCreateEl("div");
-    $listPostsContainer = commonJsCreateEl("div");
+    $listPostsContainer = new PostsList();
     $colRightContentContainer = commonJsCreateEl("div");
     $listWatchings = new WatchingsList();
     
@@ -25,7 +24,7 @@ class Home {
 
         //left
         commonJsAddClass(this.$colLeftContentContainer, "col-12", "col-md-6", "offset-md-1");
-        this.$colLeftContentContainer.appendChild(this.$listPostsContainer);
+        this.$colLeftContentContainer.appendChild(this.$listPostsContainer.$container);
 
         //right
         commonJsAddClass(this.$colRightContentContainer, "col-12", "col-md-4");
@@ -33,33 +32,31 @@ class Home {
     }
 
     setCurrentUserActive = (user, idUser) => {
+        this.$listPostsContainer.clearPostsList();
         this.lstwatchings = user.watchings;
         this.getlistPosts();
         this.$listWatchings.handelRemoveWatching();
         this.$listWatchings.addItemWatchings(user.watchings, idUser);
     }
-
-    // setCurrentUserActiveUpdate = (user, idUser) => {
-    //     this.lstwatchings = user.watchings;
-    //     this.getlistPosts();
-    //     this.$listWatchings.handelRemoveWatching();
-    //     this.$listWatchings.addItemWatchings(user.watchings, idUser);
-    // }
+    setCurrentUserActiveUpdate = (user, idUser) => {
+        this.lstwatchings = user.watchings;
+        this.$listWatchings.handelRemoveWatching();
+        this.$listWatchings.addItemWatchings(user.watchings, idUser);
+    }
 
     getlistPosts = () => {
         if(this.lstdataPosts !== null) {
-            this.$listPostsContainer.innerHTML = "";
-            //hủy messagesSubcriber
+            console.log(1)
             this.lstdataPosts();
         }
         this.lstdataPosts = db.collection("posts")
             .where("email", "in", this.lstwatchings)
-            .orderBy('createAt', 'asc')
+            .orderBy('createAt')
             .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                    this.$listPostsContainer.prepend($postsList.$container);
+                    console.log(change.doc.data())
+                    this.$listPostsContainer.addPostsList(change.doc.data(), change.doc.id);
                 }
             });
             this.lastestDoc = snapshot.docs[snapshot.docs.length-1]; 
