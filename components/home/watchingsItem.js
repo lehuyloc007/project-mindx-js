@@ -7,9 +7,9 @@ class WatchingItem {
     $ItemRemove = commonJsCreateEl("div");
 
     email;
-    id;
-    constructor(item) {
+    constructor(item, id) {
         this.email = item.email;
+        this.idCurentUser = id;
         commonJsAddClass(this.$container, "bg-white", "p-3", "rounded-3", "d-flex", "align-items-center", "mt-3");
         commonJsAddClass(this.$itemImages, "rounded-circle");
         this.$itemImages.src = item.photoURL;
@@ -27,7 +27,7 @@ class WatchingItem {
         };
     }
     handelRemoveWatching = () => {
-        this.$container.remove();
+        this.$container.innerHTML = "";
     }
 
 }

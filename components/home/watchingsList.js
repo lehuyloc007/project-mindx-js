@@ -6,7 +6,6 @@ class WatchingsList {
     $titleWatchings = commonJsCreateEl("div");
     $listWatchings = commonJsCreateEl("div");
 
-    itemWatchings = [];
     lstWatchings = null
     constructor() {
 
@@ -17,7 +16,7 @@ class WatchingsList {
         this.$container.appendChild(this.$listWatchings);
 
     }
-    addItemWatchings = (watchings, id) => {
+    addItemWatchings = (watchings, idCurentUser) => {
         this.lstWatchings = watchings;
         watchings.forEach(el => {
             db.collection("users")
@@ -27,30 +26,25 @@ class WatchingsList {
                     if(change.type == "added"){
                         const item = new WatchingItem(change.doc.data());
                         item.handelOnClickRemoveWatching((email) => {
-                            this.handelClickRemoveWatchings(email, id);
+                            this.handelClickRemoveWatchings(email, idCurentUser);
                         })
                         this.$listWatchings.appendChild(item.$container);
-                        this.itemWatchings.push(item);
                     }
                 });
             });
         });
     }
     handelClickRemoveWatchings = (email, id) => {
-        const indexEl = this.lstWatchings.indexOf(email)
+        const indexEl = this.lstWatchings.indexOf(email);
         if (indexEl > -1) {
             this.lstWatchings.splice(indexEl,1)
             db.collection("users").doc(id).update({
                 watchings: this.lstWatchings,
             })
-            .then(() => {
-                this.itemWatchings.forEach(item => {
-                    if(item.email == email){
-                        item.handelRemoveWatching()
-                    }
-                });
-            })
         }
+    }
+    handelRemoveWatching = () => {
+        this.$listWatchings.innerHTML= "";
     }
 }
 export { WatchingsList }

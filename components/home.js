@@ -16,6 +16,7 @@ class Home {
     
     lastestDoc = null;
     lstwatchings = null;
+    checkFirstLoad = true;
     constructor(){
         //content
         commonJsAddClass(this.$container, "container", "my-5", "pt-3", "text-dark");
@@ -30,7 +31,10 @@ class Home {
         commonJsAddClass(this.$btnLoadMorePostsContainer, "d-flex", "d-none");
         commonJsAddClass(this.$btnLoadMorePosts, "btn", "btn-outline-secondary", "my-5", "mx-auto");
         this.$btnLoadMorePosts.innerHTML = "Hiển thị thêm bài viết";
-        this.$btnLoadMorePosts.addEventListener("click", this.getlistPosts);
+        this.$btnLoadMorePosts.addEventListener("click", ()=> {
+            this.checkFirstLoad = true;
+            this.getlistPosts();
+        });
         this.$btnLoadMorePostsContainer.appendChild(this.$btnLoadMorePosts);
         this.$colLeftContentContainer.appendChild(this.$btnLoadMorePostsContainer);
         
@@ -45,7 +49,15 @@ class Home {
         this.getlistPosts();
         this.$listWatchings.addItemWatchings(user.watchings, idUser);
     }
-    
+
+    setCurrentUserActiveUpdate = (user, idUser) => {
+        this.$listPostsContainer.innerHTML = "";
+        this.lstwatchings = user.watchings;
+        this.getlistPosts();
+        this.$listWatchings.handelRemoveWatching();
+        this.$listWatchings.addItemWatchings(user.watchings, idUser);
+    }
+
     getlistPosts = () => {
         commonJsRemoveClass(this.$btnLoadMorePostsContainer,  "d-none");
         if(this.lastestDoc === undefined) {
@@ -61,21 +73,29 @@ class Home {
         } 
         lstdataPosts.onSnapshot((snapshot) => {
             var checkLocal = snapshot.metadata.hasPendingWrites ? true : false;
-            console.log(snapshot.docs)
             
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    if(checkLocal) {
-                        const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                        this.$listPostsContainer.prepend($postsList.$container);
-                    } else {
+                    if(this.checkFirstLoad) {
                         const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
                         this.$listPostsContainer.appendChild($postsList.$container);
                         this.lastestDoc = snapshot.docs[snapshot.docs.length-1]; 
+                    } else {
+                        const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
+                        this.$listPostsContainer.prepend($postsList.$container);
                     }
+                    // if(!this.checkFirstLoad) {
+                        
+                    // } else {
+                        
+                    // }
                     
                 }
+                
             });
+            if(this.checkFirstLoad) {
+                this.checkFirstLoad = false;
+            }
               
             
             

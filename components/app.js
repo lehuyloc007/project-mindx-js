@@ -70,6 +70,10 @@ class App {
         if (change.type == "modified") {
           this.$detailContainer.setCurrentUserInfoUpdate(change.doc.data());
           this.$detailContainer.setNumberWatchingsUpdated(change.doc.data());
+          this.$homeContainer.setCurrentUserActiveUpdate(
+            change.doc.data(),
+            change.doc.id
+          );
         }
       });
     });
