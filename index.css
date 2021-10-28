@@ -80,6 +80,9 @@ a {
     display: inline-block;
     background-repeat: no-repeat;
 }
+.list-friend-item div:first-child {
+    display: none !important;
+}
 .list-search img {
     width: 60px;
     height: 60px;

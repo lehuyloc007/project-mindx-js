@@ -13,6 +13,7 @@ class WatchingsList {
         this.$titleWatchings.innerHTML = "Đang theo dõi";
         commonJsAddClass(this.$container, "list-friend");
         this.$container.appendChild(this.$titleWatchings);
+        commonJsAddClass(this.$listWatchings, "list-friend-item");
         this.$container.appendChild(this.$listWatchings);
 
     }

@@ -16,7 +16,7 @@ class Home {
     
     lastestDoc = null;
     lstwatchings = null;
-    checkFirstLoad = true;
+    lstdataPosts = null;
     constructor(){
         //content
         commonJsAddClass(this.$container, "container", "my-5", "pt-3", "text-dark");
@@ -28,16 +28,6 @@ class Home {
         //left
         commonJsAddClass(this.$colLeftContentContainer, "col-12", "col-md-6", "offset-md-1");
         this.$colLeftContentContainer.appendChild(this.$listPostsContainer);
-        commonJsAddClass(this.$btnLoadMorePostsContainer, "d-flex", "d-none");
-        commonJsAddClass(this.$btnLoadMorePosts, "btn", "btn-outline-secondary", "my-5", "mx-auto");
-        this.$btnLoadMorePosts.innerHTML = "Hiển thị thêm bài viết";
-        this.$btnLoadMorePosts.addEventListener("click", ()=> {
-            this.checkFirstLoad = true;
-            this.getlistPosts();
-        });
-        this.$btnLoadMorePostsContainer.appendChild(this.$btnLoadMorePosts);
-        this.$colLeftContentContainer.appendChild(this.$btnLoadMorePostsContainer);
-        
 
         //right
         commonJsAddClass(this.$colRightContentContainer, "col-12", "col-md-4");
@@ -51,7 +41,6 @@ class Home {
     }
 
     setCurrentUserActiveUpdate = (user, idUser) => {
-        this.$listPostsContainer.innerHTML = "";
         this.lstwatchings = user.watchings;
         this.getlistPosts();
         this.$listWatchings.handelRemoveWatching();
@@ -59,46 +48,17 @@ class Home {
     }
 
     getlistPosts = () => {
-        commonJsRemoveClass(this.$btnLoadMorePostsContainer,  "d-none");
-        if(this.lastestDoc === undefined) {
-            commonJsAddClass(this.$btnLoadMorePostsContainer, "d-none");
-            return;
-        };
-        let lstdataPosts = db.collection("posts")
+        this.lstdataPosts = db.collection("posts")
             .where("email", "in", this.lstwatchings)
-            .orderBy('createAt', 'desc')
-            .limit(5);
-        if(this.lastestDoc !== null) {
-            lstdataPosts =  lstdataPosts.startAfter(this.lastestDoc)
-        } 
-        lstdataPosts.onSnapshot((snapshot) => {
-            var checkLocal = snapshot.metadata.hasPendingWrites ? true : false;
-            
+            .orderBy('createAt', 'asc')
+            .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    if(this.checkFirstLoad) {
-                        const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                        this.$listPostsContainer.appendChild($postsList.$container);
-                        this.lastestDoc = snapshot.docs[snapshot.docs.length-1]; 
-                    } else {
-                        const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
-                        this.$listPostsContainer.prepend($postsList.$container);
-                    }
-                    // if(!this.checkFirstLoad) {
-                        
-                    // } else {
-                        
-                    // }
-                    
+                    const $postsList = new PostsListItem(change.doc.data(), change.doc.id);
+                    this.$listPostsContainer.prepend($postsList.$container);
                 }
-                
             });
-            if(this.checkFirstLoad) {
-                this.checkFirstLoad = false;
-            }
-              
-            
-            
+            this.lastestDoc = snapshot.docs[snapshot.docs.length-1]; 
         });
     }
 }
