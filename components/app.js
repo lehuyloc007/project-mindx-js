@@ -70,7 +70,7 @@ class App {
         if (change.type == "modified") {
           this.$detailContainer.setCurrentUserInfoUpdate(change.doc.data());
           this.$detailContainer.setNumberWatchingsUpdated(change.doc.data());
-          this.$homeContainer.setCurrentUserActiveUpdate(
+          this.$homeContainer.setCurrentUserActive(
             change.doc.data(),
             change.doc.id
           );

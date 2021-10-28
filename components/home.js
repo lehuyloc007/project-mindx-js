@@ -9,8 +9,6 @@ class Home {
     $rowContentContainer = commonJsCreateEl("div");
     $colLeftContentContainer = commonJsCreateEl("div");
     $listPostsContainer = commonJsCreateEl("div");
-    $btnLoadMorePostsContainer = commonJsCreateEl("div");
-    $btnLoadMorePosts = commonJsCreateEl("div");
     $colRightContentContainer = commonJsCreateEl("div");
     $listWatchings = new WatchingsList();
     
@@ -37,17 +35,23 @@ class Home {
     setCurrentUserActive = (user, idUser) => {
         this.lstwatchings = user.watchings;
         this.getlistPosts();
-        this.$listWatchings.addItemWatchings(user.watchings, idUser);
-    }
-
-    setCurrentUserActiveUpdate = (user, idUser) => {
-        this.lstwatchings = user.watchings;
-        this.getlistPosts();
         this.$listWatchings.handelRemoveWatching();
         this.$listWatchings.addItemWatchings(user.watchings, idUser);
     }
 
+    // setCurrentUserActiveUpdate = (user, idUser) => {
+    //     this.lstwatchings = user.watchings;
+    //     this.getlistPosts();
+    //     this.$listWatchings.handelRemoveWatching();
+    //     this.$listWatchings.addItemWatchings(user.watchings, idUser);
+    // }
+
     getlistPosts = () => {
+        if(this.lstdataPosts !== null) {
+            this.$listPostsContainer.innerHTML = "";
+            //hủy messagesSubcriber
+            this.lstdataPosts();
+        }
         this.lstdataPosts = db.collection("posts")
             .where("email", "in", this.lstwatchings)
             .orderBy('createAt', 'asc')
