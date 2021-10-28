@@ -13,7 +13,6 @@ class Home {
     
     lastestDoc = null;
     lstwatchings = null;
-    lstdataPosts = null;
     constructor(){
         //content
         commonJsAddClass(this.$container, "container", "my-5", "pt-3", "text-dark");
@@ -45,11 +44,7 @@ class Home {
     }
 
     getlistPosts = () => {
-        if(this.lstdataPosts !== null) {
-            console.log(1)
-            this.lstdataPosts();
-        }
-        this.lstdataPosts = db.collection("posts")
+        db.collection("posts")
             .where("email", "in", this.lstwatchings)
             .orderBy('createAt')
             .onSnapshot((snapshot) => {

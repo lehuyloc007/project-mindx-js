@@ -27,9 +27,7 @@ class CreatePosts {
     constructor() {
         commonJsAddClass(this.$modalBodyInfoUser, "rounded-3", "create-post-body-info-user", "d-flex", "align-items-center", "mt-3");
         commonJsAddClass(this.$modalBodyInfoUserImg, "rounded-circle");
-        this.$modalBodyInfoUserImg.src = "../components/imgs/111.jpg";
         commonJsAddClass(this.$modalBodyInfoUserName, "ms-1", "h5", "me-auto");
-        this.$modalBodyInfoUserName.innerHTML = "TonyAdams";
 
         this.$modalBodyInfoUser.appendChild(this.$modalBodyInfoUserImg);
         this.$modalBodyInfoUser.appendChild(this.$modalBodyInfoUserName);
@@ -174,6 +172,9 @@ class CreatePosts {
 
         
     }
-
+    setCurrentUserActive = (user) => {
+        this.$modalBodyInfoUserImg.src = user.photoURL;
+        this.$modalBodyInfoUserName.innerHTML = user.displayName;
+    }
 }
 export { CreatePosts }

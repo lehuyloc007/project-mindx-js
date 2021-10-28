@@ -124,5 +124,8 @@ class Menu {
   setBackgroungIconUserActive = (imgUser) => {
     this.$menuItemBtnUserContainer.setBackgroungIconUser(imgUser);
   };
+  setCurrentUserActive = (user) => {
+    this.$modalCreatePosts.setCurrentUserActive(user);
+  };
 }
 export { Menu };
