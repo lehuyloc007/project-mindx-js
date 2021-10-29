@@ -59,6 +59,9 @@ class Home {
                 if(change.type == "added"){
                     this.$listPostsContainer.addPostsList(change.doc.data(), change.doc.id);
                 }
+                if(change.type == "modified"){
+                    this.$listPostsContainer.handelUpdateLikeCount(change.doc.data().likes.length, change.doc.id);
+                }
             });
         });
     }

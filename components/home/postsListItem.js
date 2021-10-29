@@ -25,6 +25,7 @@ class PostsListItem {
     activeIdPosts = null;
     constructor(dataItemPosts, postsId) {
         
+        this.activeIdPosts = postsId;
         //card header
         
         commonJsAddClass(this.$container, "card", "post-new", "mb-3");
@@ -37,7 +38,7 @@ class PostsListItem {
 
         //card body
         commonJsAddClass(this.$cardBody, "card-body", "py-0", "fs-09");
-        commonJsAddClass(this.$contentPosts, "card-text");
+        commonJsAddClass(this.$contentPosts, "card-text", "pb-2");
 
         this.$container.appendChild(this.$cardHeader);
         this.$contentPosts.innerHTML= dataItemPosts.detail;
@@ -142,6 +143,9 @@ class PostsListItem {
         }).then(() => {
             this.$inputComment.value = "";
         })
+    }
+    handelUpdateLikeCount = (numlike) => {
+        this.$likeCountNumber.innerHTML = numlike + " lượt thích";
     }
     
 }
