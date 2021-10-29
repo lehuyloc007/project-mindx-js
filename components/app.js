@@ -54,18 +54,10 @@ class App {
     .onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type == "added") {
-          this.$menuContainer.setBackgroungIconUserActive(
-            change.doc.data().photoURL
-          );
+          this.$menuContainer.setBackgroungIconUserActive(change.doc.data().photoURL);
           this.$menuContainer.setCurrentUserActive(change.doc.data());
-          this.$homeContainer.setCurrentUserActive(
-            change.doc.data(),
-            change.doc.id
-          );
-          this.$detailContainer.setCurrentUserInfo(
-            change.doc.data(),
-            change.doc.id
-          );
+          this.$homeContainer.setCurrentUserActive( change.doc.data(), change.doc.id);
+          this.$detailContainer.setCurrentUserInfo(change.doc.data(), change.doc.id);
           this.$searchContainer.setCurrentUserInfo(change.doc.data(), change.doc.id);
         }
         if (change.type == "modified") {
@@ -73,10 +65,7 @@ class App {
             change.doc.data().photoURL
           );
           this.$menuContainer.setCurrentUserActive(change.doc.data());
-          this.$homeContainer.setCurrentUserActiveUpdate(
-            change.doc.data(),
-            change.doc.id
-          );
+          this.$homeContainer.setCurrentUserActiveUpdate(change.doc.data(), change.doc.id);
           this.$detailContainer.setCurrentUserInfoUpdate(change.doc.data());
           this.$detailContainer.setNumberWatchingsUpdated(change.doc.data());
           this.$searchContainer.setCurrentUserInfo(change.doc.data(), change.doc.id);

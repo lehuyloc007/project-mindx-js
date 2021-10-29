@@ -80,7 +80,7 @@ class PostsListItem {
 
         this.$container.appendChild(this.$cardHeader);
         this.$container.appendChild(this.$cardBody);
-        this.getInfoUserPosts(dataItemPosts)
+        this.getInfoUserPosts(dataItemPosts);
         
     }
 
@@ -89,14 +89,20 @@ class PostsListItem {
         .where("email", "==", dataUserPosts.email)
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
-                if(change.type == "added")
-                this.$imagesUserPost.src = change.doc.data().photoURL;
-                this.$nameUserPost.innerHTML = change.doc.data().displayName;
+                if(change.type == "added"){
+                    this.$imagesUserPost.src = change.doc.data().photoURL;
+                    this.$nameUserPost.innerHTML = change.doc.data().displayName;
+                }
+                if (change.type == "modified") {
+                    this.$imagesUserPost.src = change.doc.data().photoURL;
+                    this.$nameUserPost.innerHTML = change.doc.data().displayName;
+                }
             });
         });
     }
 
-    getCommentPosts = (postsId) => { db.collection("comments")
+    getCommentPosts = (postsId) => { 
+        db.collection("comments")
         .where("postsId", "==", postsId)
         .orderBy('createAt', 'asc')
         .onSnapshot((snapshot) => {

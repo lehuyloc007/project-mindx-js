@@ -11,8 +11,8 @@ class Home {
     $colRightContentContainer = commonJsCreateEl("div");
     $listWatchings = new WatchingsList();
     
-    lastestDoc = null;
     lstwatchings = null;
+    lstDataPost = null;
     constructor(){
         //content
         commonJsAddClass(this.$container, "container", "my-5", "pt-3", "text-dark");
@@ -44,17 +44,22 @@ class Home {
     }
 
     getlistPosts = () => {
-        db.collection("posts")
+        if (this.lstDataPost !== null) {
+            this.lstDataPost();
+        }
+        if(this.lstwatchings.length >= 9) {
+            this.lstwatchings = this.lstwatchings.slice(0,8);
+        }
+        this.lstDataPost = db.collection("posts")
             .where("email", "in", this.lstwatchings)
             .orderBy('createAt')
             .onSnapshot((snapshot) => {
+
             snapshot.docChanges().forEach((change) => {
                 if(change.type == "added"){
-                    console.log(change.doc.data())
                     this.$listPostsContainer.addPostsList(change.doc.data(), change.doc.id);
                 }
             });
-            this.lastestDoc = snapshot.docs[snapshot.docs.length-1]; 
         });
     }
 }
