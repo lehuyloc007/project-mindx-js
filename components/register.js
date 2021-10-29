@@ -117,8 +117,12 @@ class Register {
                     firebase.auth().currentUser.sendEmailVerification()
                     .then(() => {
                         alert("Vui lòng kiểm tra email để xác thực tài khoản")
-                    });
+                    })
                 })
+            }).catch((error) => {
+                if (error.code = "auth/email-already-in-use") {
+                    this.$inputGroupEmail.setErrMessage("Email đã được sử dụng");
+                }
             });
         }
         
