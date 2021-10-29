@@ -2,6 +2,7 @@ import {
   commonJsAddClass,
   commonJsCreateEl,
   commonJsRemoveClass,
+  hasWhiteSpace
 } from "../shared/common.js";
 import { ModalCommon } from "../shared/modal.js";
 import { ChangePassword } from "./changePassword.js";
@@ -22,6 +23,7 @@ class EditProfile {
   $userNameContainer = commonJsCreateEl("div");
   $userNameInput = commonJsCreateEl("input");
   $userNameLabel = commonJsCreateEl("label");
+  $userNameError = commonJsCreateEl("div");
   $describeContainer = commonJsCreateEl("div");
   $describeInput = commonJsCreateEl("input");
   $describeLabel = commonJsCreateEl("label");
@@ -59,6 +61,7 @@ class EditProfile {
       "icon-edit-container",
       "cursor-pointer"
     );
+    commonJsAddClass(this.$userNameError, "alert", "alert-danger", "py-1", "mt-1", "d-none");
     commonJsAddClass(this.$userNameContainer, "form-floating", "mt-4");
     commonJsAddClass(this.$userNameInput, "form-control");
     commonJsAddClass(this.$describeContainer, "form-floating", "mt-4");
@@ -114,6 +117,7 @@ class EditProfile {
     this.$userNameContainer.appendChild(this.$userNameInput);
     this.$userNameContainer.appendChild(this.$userNameLabel);
     this.$bodyModalContainer.appendChild(this.$userNameContainer);
+    this.$bodyModalContainer.appendChild(this.$userNameError);
     this.$describeContainer.appendChild(this.$describeInput);
     this.$describeContainer.appendChild(this.$describeLabel);
     this.$bodyModalContainer.appendChild(this.$describeContainer);
@@ -213,7 +217,15 @@ class EditProfile {
     const userName = this.$userNameInput.value;
     const userDes = this.$describeInput.value;
 
-    db.collection("users")
+    if (!userName) {
+      this.$userNameError.innerText = "Tên hiển thị không được để trống";
+      commonJsRemoveClass(this.$userNameError,"d-none");
+    } else if(hasWhiteSpace(userName)) {
+      this.$userNameError.innerText = "Tên hiển thị không được có khoảng trắng";
+      commonJsRemoveClass(this.$userNameError,"d-none");
+    } else {
+      commonJsAddClass(this.$userNameError,"d-none");
+      db.collection("users")
       .doc(this.$userId)
       .update({
         displayName: userName,
@@ -227,6 +239,7 @@ class EditProfile {
       .catch((error) => {
         console.log(error);
       });
+    }
   };
 }
 
