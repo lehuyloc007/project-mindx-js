@@ -17,7 +17,7 @@ class PostsList {
     clearPostsList = () => {
         this.$container.innerHTML = "";
     }
-    handelUpdateLikeCount = (idPosts, numlike) => {
+    handelUpdateLikeCount = (numlike, idPosts) => {
         this.lstPosts.forEach((item) => {
             if(item.activeIdPosts == idPosts) {
                 item.handelUpdateLikeCount(numlike)
